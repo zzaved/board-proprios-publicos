@@ -2,6 +2,30 @@
 let featherReady = false;
 let featherQueue = [];
 
+// Icon name mappings for compatibility
+const ICON_MAPPINGS = {
+    'map-pin': 'map-pin',  // exists in Feather
+    'user': 'user',        // exists in Feather
+    'calendar': 'calendar', // exists in Feather
+    'tool': 'tool',        // exists in Feather
+    'alert-triangle': 'alert-triangle', // exists in Feather
+    'lightbulb': 'zap',    // using 'zap' as alternative
+    'cpu': 'cpu',          // exists in Feather
+    'package': 'package',  // exists in Feather
+    'building': 'home',    // using 'home' as alternative
+    'eye': 'eye',          // exists in Feather
+    'external-link': 'external-link', // exists in Feather
+    'help-circle': 'help-circle', // exists in Feather
+    'image': 'image',      // exists in Feather
+    'check': 'check',      // exists in Feather
+    'x': 'x'              // exists in Feather
+};
+
+// Function to get valid Feather icon name
+function getValidFeatherIcon(iconName) {
+    return ICON_MAPPINGS[iconName] || iconName;
+}
+
 // Create a single styleSheet for all styles
 const appStyles = document.createElement('style');
 document.head.appendChild(appStyles);
@@ -85,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
             simulateRealTimeUpdates();
             processFeatherQueue();
             initializeTabs();
-            console.log('🚀 ZeloBoard inicializado com sucesso!');
+            console.log('🚀 BPP: Board de Gestão de Próprios Públicos inicializado com sucesso!');
         })
         .catch(error => {
             console.warn('❌ Erro ao carregar Feather:', error);
@@ -161,7 +185,15 @@ function initializeFeatherIcons() {
             if (!window.feather || !window.feather.replace) {
                 throw new Error('Feather não está disponível');
             }
+            
+            // Update all icon names to valid ones
+            document.querySelectorAll('[data-feather]').forEach(icon => {
+                const originalIcon = icon.getAttribute('data-feather');
+                icon.setAttribute('data-feather', getValidFeatherIcon(originalIcon));
+            });
+            
             feather.replace();
+            featherReady = true;
             console.log('✨ Feather icons inicializados com sucesso!');
             resolve();
         } catch (error) {
@@ -204,6 +236,12 @@ function safeFeatherReplace() {
         }
 
         try {
+            // Update all icon names to valid ones before replacing
+            document.querySelectorAll('[data-feather]').forEach(icon => {
+                const originalIcon = icon.getAttribute('data-feather');
+                icon.setAttribute('data-feather', getValidFeatherIcon(originalIcon));
+            });
+            
             feather.replace();
         } catch (error) {
             console.warn('Erro ao atualizar ícones:', error);
@@ -777,7 +815,7 @@ function trackPerformance() {
     // Simple performance tracking
     window.addEventListener('load', function() {
         const loadTime = performance.now();
-        console.log(`⚡ ZeloBoard carregado em ${Math.round(loadTime)}ms`);
+        console.log(`⚡ BPP carregado em ${Math.round(loadTime)}ms`);
     });
 }
 
