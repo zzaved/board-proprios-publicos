@@ -3,337 +3,308 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestão de OS - Próprios Públicos</title>
+    <title>ZeloBoard - Gestão de OS</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
         }
-
+        
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .header-content {
+            background: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
         }
-
+        
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(45deg, #4CAF50, #2196F3);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .header-title {
+        
+        .logo h1 {
+            color: #2c3e50;
             font-size: 24px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .header-subtitle {
-            font-size: 14px;
-            color: #7f8c8d;
-            margin-top: 2px;
-        }
-
-        .stats {
-            display: flex;
-            gap: 20px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 8px 16px;
-            background: rgba(255,255,255,0.8);
-            border-radius: 12px;
-            border: 1px solid rgba(0,0,0,0.1);
-        }
-
-        .stat-number {
-            font-size: 20px;
             font-weight: bold;
-            color: #2c3e50;
         }
-
-        .stat-label {
-            font-size: 12px;
-            color: #7f8c8d;
-            margin-top: 2px;
-        }
-
-        .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .filters {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .filters-row {
+        
+        .user-info {
             display: flex;
-            gap: 16px;
             align-items: center;
-            flex-wrap: wrap;
+            gap: 15px;
+            color: #666;
         }
-
-        .filter-group {
+        
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .tabs {
             display: flex;
-            flex-direction: column;
-            gap: 4px;
+            background: white;
+            border-radius: 10px 10px 0 0;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-
-        .filter-label {
-            font-size: 12px;
+        
+        .tab {
+            padding: 15px 25px;
+            background: #f8f9fa;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
             font-weight: 500;
             color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
         }
-
-        .filter-input, .filter-select {
-            padding: 8px 12px;
-            border: 2px solid #e1e8ed;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s ease;
+        
+        .tab.active {
             background: white;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
         }
-
-        .filter-input:focus, .filter-select:focus {
-            outline: none;
-            border-color: #4CAF50;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
-        }
-
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
-        }
-
-        .btn-secondary {
-            background: #f8f9fa;
-            color: #495057;
-            border: 1px solid #dee2e6;
-        }
-
-        .btn-secondary:hover {
+        
+        .tab:hover {
             background: #e9ecef;
         }
-
-        .kanban-board {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
-            margin-top: 20px;
-        }
-
-        .kanban-column {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
+        
+        .content {
+            background: white;
+            border-radius: 0 0 10px 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             min-height: 600px;
         }
-
-        .column-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #f1f3f4;
+        
+        .tab-content {
+            display: none;
         }
-
-        .column-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #2c3e50;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        
+        .tab-content.active {
+            display: block;
         }
-
-        .column-count {
-            background: #e3f2fd;
-            color: #1976d2;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .task-card {
-            background: white;
-            border: 1px solid #e1e8ed;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .task-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            border-color: #4CAF50;
-        }
-
-        .task-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
-
-        .task-id {
-            font-size: 12px;
-            font-weight: 600;
-            color: #666;
-            background: #f8f9fa;
-            padding: 4px 8px;
-            border-radius: 6px;
-        }
-
-        .task-priority {
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .priority-alta {
-            background: #ffebee;
-            color: #c62828;
-        }
-
-        .priority-media {
-            background: #fff3e0;
-            color: #ef6c00;
-        }
-
-        .priority-baixa {
-            background: #e8f5e8;
-            color: #2e7d32;
-        }
-
-        .task-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-
-        .task-description {
-            font-size: 12px;
-            color: #7f8c8d;
-            margin-bottom: 12px;
-            line-height: 1.5;
-        }
-
-        .task-details {
+        
+        /* Dashboard Styles */
+        .stats-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            font-size: 11px;
-            color: #666;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
-
-        .task-detail {
-            display: flex;
-            align-items: center;
-            gap: 4px;
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-
-        .task-footer {
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #f1f3f4;
+        
+        .stat-card h3 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        /* Kanban Styles */
+        .kanban-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            overflow-x: auto;
+        }
+        
+        .kanban-column {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 500px;
+        }
+        
+        .kanban-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 15px;
         }
-
-        .task-tags {
+        
+        .kanban-header h3 {
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        
+        .badge {
+            background: #3498db;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .os-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .os-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .os-number {
+            font-weight: bold;
+            color: #3498db;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .os-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        
+        .os-location {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .os-tags {
             display: flex;
-            gap: 4px;
+            gap: 5px;
             flex-wrap: wrap;
         }
-
-        .task-tag {
-            background: #e3f2fd;
-            color: #1976d2;
+        
+        .tag {
+            background: #e74c3c;
+            color: white;
             padding: 2px 6px;
-            border-radius: 4px;
+            border-radius: 3px;
             font-size: 10px;
+        }
+        
+        .tag.urgente {
+            background: #e74c3c;
+        }
+        
+        .tag.normal {
+            background: #f39c12;
+        }
+        
+        .tag.baixa {
+            background: #27ae60;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
             font-weight: 500;
+            color: #2c3e50;
         }
-
-        .task-assigned {
-            font-size: 11px;
-            color: #666;
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
         }
-
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .btn {
+            background: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+        }
+        
+        .btn-success {
+            background: #27ae60;
+        }
+        
+        .btn-success:hover {
+            background: #229954;
+        }
+        
+        /* AI Suggestions */
+        .ai-suggestions {
+            background: #f8f9ff;
+            border: 2px solid #e6f2ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .ai-icon {
+            font-size: 20px;
+        }
+        
+        .suggestion-item {
+            background: white;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+        
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -342,819 +313,761 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
             z-index: 1000;
-            padding: 20px;
         }
-
+        
         .modal-content {
             background: white;
-            border-radius: 16px;
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto;
-            max-height: 90vh;
+            margin: 5% auto;
+            padding: 30px;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-
-        .modal-header {
-            padding: 24px;
-            border-bottom: 1px solid #e1e8ed;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
+        
+        .close {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
             cursor: pointer;
-            color: #666;
-            padding: 4px;
-            border-radius: 4px;
+            color: #aaa;
         }
-
-        .close-btn:hover {
-            background: #f8f9fa;
-            color: #333;
+        
+        .close:hover {
+            color: #000;
         }
-
-        .modal-body {
-            padding: 24px;
+        
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 20px;
+            margin: 10px 0;
+            overflow: hidden;
         }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s;
         }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .form-label {
-            font-size: 14px;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .form-input, .form-textarea, .form-select {
-            padding: 12px;
-            border: 2px solid #e1e8ed;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus, .form-textarea:focus, .form-select:focus {
-            outline: none;
-            border-color: #4CAF50;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
-        }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .modal-footer {
-            padding: 20px 24px;
-            border-top: 1px solid #e1e8ed;
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-        }
-
-        .status-recebido { border-left: 4px solid #2196F3; }
-        .status-vistoria { border-left: 4px solid #FF9800; }
-        .status-programacao { border-left: 4px solid #9C27B0; }
-        .status-execucao { border-left: 4px solid #FF5722; }
-        .status-finalizado { border-left: 4px solid #4CAF50; }
-
-        .icon {
-            width: 16px;
-            height: 16px;
-            display: inline-block;
-        }
-
+        
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 16px;
-                text-align: center;
-            }
-
-            .stats {
-                justify-content: center;
-            }
-
-            .filters-row {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
             .kanban-board {
                 grid-template-columns: 1fr;
             }
-
-            .form-grid {
+            
+            .stats-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
             }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-content">
-            <div class="logo">
-                <div class="logo-icon">OS</div>
-                <div>
-                    <div class="header-title">Sistema de Gestão de OS</div>
-                    <div class="header-subtitle">Próprios Públicos - SAR03</div>
-                </div>
-            </div>
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number">23</div>
-                    <div class="stat-label">Abertas</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">8</div>
-                    <div class="stat-label">Em Andamento</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">156</div>
-                    <div class="stat-label">Finalizadas</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">4.2</div>
-                    <div class="stat-label">Dias Médio</div>
-                </div>
-            </div>
+    <div class="header">
+        <div class="logo">
+            <div style="font-size: 24px;">🛠️</div>
+            <h1>ZeloBoard</h1>
+            <span style="color: #666; font-size: 14px;">| Gestão de Próprios Públicos</span>
         </div>
-    </header>
+        <div class="user-info">
+            <span>👤 João Silva - SAR03</span>
+            <span>📅 24/05/2025</span>
+        </div>
+    </div>
 
-    <main class="main-container">
-        <div class="filters">
-            <div class="filters-row">
-                <div class="filter-group">
-                    <label class="filter-label">Buscar OS</label>
-                    <input type="text" class="filter-input" placeholder="Número SEI, local, descrição...">
-                </div>
-                <div class="filter-group">
-                    <label class="filter-label">Tipo de Serviço</label>
-                    <select class="filter-select">
-                        <option value="">Todos</option>
-                        <option value="manutencao">Manutenção</option>
-                        <option value="construcao">Construção</option>
-                        <option value="reforma">Reforma</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label class="filter-label">Divisão</label>
-                    <select class="filter-select">
-                        <option value="">Todas</option>
-                        <option value="SAR03.01">SAR03.01 - Construção</option>
-                        <option value="SAR03.03">SAR03.03 - Manutenção</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label class="filter-label">Prioridade</label>
-                    <select class="filter-select">
-                        <option value="">Todas</option>
-                        <option value="alta">Alta</option>
-                        <option value="media">Média</option>
-                        <option value="baixa">Baixa</option>
-                    </select>
-                </div>
-                <button class="btn btn-primary" onclick="showNewOSModal()">
-                    ➕ Nova OS
-                </button>
-                <button class="btn btn-secondary">
-                    📊 Relatórios
-                </button>
-            </div>
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
+            <button class="tab" onclick="showTab('kanban')">📋 Kanban OS</button>
+            <button class="tab" onclick="showTab('nova-os')">➕ Nova OS</button>
+            <button class="tab" onclick="showTab('relatorios')">📈 Relatórios</button>
         </div>
 
-        <div class="kanban-board">
-            <div class="kanban-column">
-                <div class="column-header">
-                    <div class="column-title">
-                        📥 Recebido (SEI)
-                    </div>
-                    <div class="column-count">5</div>
-                </div>
+        <div class="content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content active">
+                <h2 style="margin-bottom: 20px; color: #2c3e50;">📊 Dashboard - Visão Geral</h2>
                 
-                <div class="task-card status-recebido" onclick="showTaskModal('os001')">
-                    <div class="task-header">
-                        <div class="task-id">OS #1129.2025/000916-7</div>
-                        <div class="task-priority priority-alta">Alta</div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>47</h3>
+                        <p>OS Abertas</p>
                     </div>
-                    <div class="task-title">Reparo hidráulico - UBS Vila Galvão</div>
-                    <div class="task-description">Vazamento na torneira do banheiro feminino, necessário reparo urgente</div>
-                    <div class="task-details">
-                        <div class="task-detail">📍 UBS Vila Galvão</div>
-                        <div class="task-detail">🏢 Saúde</div>
-                        <div class="task-detail">📅 22/05/2025</div>
-                        <div class="task-detail">⚡ Emergencial</div>
+                    <div class="stat-card">
+                        <h3>23</h3>
+                        <p>Em Execução</p>
                     </div>
-                    <div class="task-footer">
-                        <div class="task-tags">
-                            <span class="task-tag">Hidráulica</span>
-                            <span class="task-tag">UBS</span>
-                        </div>
-                        <div class="task-assigned">Aguardando triagem</div>
+                    <div class="stat-card">
+                        <h3>156</h3>
+                        <p>Finalizadas (Mês)</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>4.2 dias</h3>
+                        <p>Tempo Médio</p>
                     </div>
                 </div>
 
-                <div class="task-card status-recebido" onclick="showTaskModal('os002')">
-                    <div class="task-header">
-                        <div class="task-id">OS #1129.2025/000861-6</div>
-                        <div class="task-priority priority-media">Média</div>
-                    </div>
-                    <div class="task-title">Pintura EMEF Santos Dumont</div>
-                    <div class="task-description">Pintura das salas de aula 1, 2 e 3 devido ao desgaste</div>
-                    <div class="task-details">
-                        <div class="task-detail">📍 EMEF Santos Dumont</div>
-                        <div class="task-detail">🏢 Educação</div>
-                        <div class="task-detail">📅 21/05/2025</div>
-                        <div class="task-detail">🔧 Preventivo</div>
-                    </div>
-                    <div class="task-footer">
-                        <div class="task-tags">
-                            <span class="task-tag">Pintura</span>
-                            <span class="task-tag">Escola</span>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                        <h3 style="margin-bottom: 15px; color: #2c3e50;">🔥 OS Urgentes</h3>
+                        <div class="os-card">
+                            <div class="os-number">OS #2025-0847</div>
+                            <div class="os-title">Vazamento hidráulico</div>
+                            <div class="os-location">📍 CEU Continental</div>
+                            <div class="os-tags">
+                                <span class="tag urgente">URGENTE</span>
+                            </div>
                         </div>
-                        <div class="task-assigned">Aguardando triagem</div>
+                        <div class="os-card">
+                            <div class="os-number">OS #2025-0851</div>
+                            <div class="os-title">Elétrica - Quadro principal</div>
+                            <div class="os-location">📍 UBS Macedo</div>
+                            <div class="os-tags">
+                                <span class="tag urgente">URGENTE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                        <h3 style="margin-bottom: 15px; color: #2c3e50;">📈 Materiais Mais Usados</h3>
+                        <div style="margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>Cimento (sacos)</span>
+                                <span><strong>127</strong></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>Tinta (litros)</span>
+                                <span><strong>89</strong></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>Areia (m³)</span>
+                                <span><strong>45</strong></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 30%;"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="kanban-column">
-                <div class="column-header">
-                    <div class="column-title">
-                        🔍 Vistoria
-                    </div>
-                    <div class="column-count">3</div>
-                </div>
-
-                <div class="task-card status-vistoria" onclick="showTaskModal('os003')">
-                    <div class="task-header">
-                        <div class="task-id">OS #1129.2025/000845-1</div>
-                        <div class="task-priority priority-alta">Alta</div>
-                    </div>
-                    <div class="task-title">Reparo telhado - Centro de Saúde</div>
-                    <div class="task-description">Goteira no teto da recepção, necessário vistoria para dimensionamento</div>
-                    <div class="task-details">
-                        <div class="task-detail">📍 Centro de Saúde Central</div>
-                        <div class="task-detail">🏢 Saúde</div>
-                        <div class="task-detail">📅 20/05/2025</div>
-                        <div class="task-detail">🔧 Corretivo</div>
-                    </div>
-                    <div class="task-footer">
-                        <div class="task-tags">
-                            <span class="task-tag">Telhado</span>
-                            <span class="task-tag">Goteira</span>
-                        </div>
-                        <div class="task-assigned">João Silva</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="kanban-column">
-                <div class="column-header">
-                    <div class="column-title">
-                        📋 Programação
-                    </div>
-                    <div class="column-count">4</div>
-                </div>
-
-                <div class="task-card status-programacao" onclick="showTaskModal('os004')">
-                    <div class="task-header">
-                        <div class="task-id">OS #1129.2025/000820-5</div>
-                        <div class="task-priority priority-media">Média</div>
-                    </div>
-                    <div class="task-title">Instalação bancos - Praça da Paz</div>
-                    <div class="task-description">Instalação de 6 bancos de concreto pré-moldado</div>
-                    <div class="task-details">
-                        <div class="task-detail">📍 Praça da Paz</div>
-                        <div class="task-detail">🏢 Espaços Públicos</div>
-                        <div class="task-detail">📅 18/05/2025</div>
-                        <div class="task-detail">🆕 Melhoria</div>
-                    </div>
-                    <div class="task-footer">
-                        <div class="task-tags">
-                            <span class="task-tag">Pré-moldado</span>
-                            <span class="task-tag">Praça</span>
-                        </div>
-                        <div class="task-assigned">Maria Santos</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="kanban-column">
-                <div class="column-header">
-                    <div class="column-title">
-                        🔧 Execução
-                    </div>
-                    <div class="column-count">2</div>
-                </div>
-
-                <div class="task-card status-execucao" onclick="showTaskModal('os005')">
-                    <div class="task-header">
-                        <div class="task-id">OS #1129.2025/000790-3</div>
-                        <div class="task-priority priority-baixa">Baixa</div>
-                    </div>
-                    <div class="task-title">Manutenção elétrica - EMEI Pequeno Príncipe</div>
-                    <div class="task-description">Troca de lâmpadas e reparo de tomadas</div>
-                    <div class="task-details">
-                        <div class="task-detail">📍 EMEI Pequeno Príncipe</div>
-                        <div class="task-detail">🏢 Educação</div>
-                        <div class="task-detail">📅 15/05/2025</div>
-                        <div class="task-detail">🔧 Preventivo</div>
-                    </div>
-                    <div class="task-footer">
-                        <div class="task-tags">
-                            <span class="task-tag">Elétrica</span>
-                            <span class="task-tag">Escola</span>
-                        </div>
-                        <div class="task-assigned">Carlos Oliveira</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="kanban-column">
-                <div class="column-header">
-                    <div class="column-title">
-                        ✅ Finalizado
-                    </div>
-                    <div class="column-count">8</div>
-                </div>
-
-                <div class="task-card status-finalizado" onclick="showTaskModal('os006')">
-                    <div class="task-header">
-                        <div class="task-id">OS #1129.2025/000760-1</div>
-                        <div class="task-priority priority-alta">Alta</div>
-                    </div>
-                    <div class="task-title">Reparo portão - UBS Vila Rosália</div>
-                    <div class="task-description">Soldagem e pintura do portão principal</div>
-                    <div class="task-details">
-                        <div class="task-detail">📍 UBS Vila Rosália</div>
-                        <div class="task-detail">🏢 Saúde</div>
-                        <div class="task-detail">📅 10/05/2025</div>
-                        <div class="task-detail">✅ 23/05/2025</div>
-                    </div>
-                    <div class="task-footer">
-                        <div class="task-tags">
-                            <span class="task-tag">Serralheria</span>
-                            <span class="task-tag">UBS</span>
-                        </div>
-                        <div class="task-assigned">Pedro Costa</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Modal de Detalhes da OS -->
-    <div id="taskModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">Detalhes da Ordem de Serviço</div>
-                <button class="close-btn" onclick="closeModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">Número SEI</label>
-                        <input type="text" class="form-input" id="seiNumber" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Status</label>
-                        <select class="form-select" id="status">
-                            <option value="recebido">Recebido</option>
-                            <option value="vistoria">Vistoria</option>
-                            <option value="programacao">Programação</option>
-                            <option value="execucao">Execução</option>
-                            <option value="finalizado">Finalizado</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Prioridade</label>
-                        <select class="form-select" id="priority">
-                            <option value="baixa">Baixa</option>
-                            <option value="media">Média</option>
-                            <option value="alta">Alta</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Tipo de Serviço</label>
-                        <select class="form-select" id="serviceType">
-                            <option value="manutencao">Manutenção</option>
-                            <option value="construcao">Construção</option>
-                            <option value="reforma">Reforma</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Local</label>
-                        <input type="text" class="form-input" id="location">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Secretaria Solicitante</label>
-                        <input type="text" class="form-input" id="department">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Responsável</label>
-                        <select class="form-select" id="responsible">
-                            <option value="">Não atribuído</option>
-                            <option value="joao">João Silva</option>
-                            <option value="maria">Maria Santos</option>
-                            <option value="carlos">Carlos Oliveira</option>
-                            <option value="pedro">Pedro Costa</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Data de Abertura</label>
-                        <input type="date" class="form-input" id="openDate">
-                    </div>
-                    <div class="form-group full-width">
-                        <label class="form-label">Título do Serviço</label>
-                        <input type="text" class="form-input" id="serviceTitle">
-                    </div>
-                    <div class="form-group full-width">
-                        <label class="form-label">Descrição</label>
-                        <textarea class="form-textarea" id="description"></textarea>
-                    </div>
-                    <div class="form-group full-width">
-                        <label class="form-label">Observações</label>
-                        <textarea class="form-textarea" id="observations"></textarea>
-                    </div>
-                </div>
+            <!-- Kanban Tab -->
+            <div id="kanban" class="tab-content">
+                <h2 style="margin-bottom: 20px; color: #2c3e50;">📋 Kanban - Fluxo de OS</h2>
                 
-                <div id="materialsSection" style="display: none;">
-                    <h3 style="margin: 20px 0 10px 0; color: #2c3e50;">Materiais Utilizados</h3>
-                    <div class="materials-grid">
-                        <div class="form-group">
-                            <label class="form-label">Areia (m³)</label>
-                            <input type="number" class="form-input" id="areia" step="0.1">
+                <div class="kanban-board">
+                    <div class="kanban-column">
+                        <div class="kanban-header">
+                            <h3>🟨 Cadastradas</h3>
+                            <span class="badge">8</span>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Cimento (sacos)</label>
-                            <input type="number" class="form-input" id="cimento">
+                        
+                        <div class="os-card" onclick="openModal('os-detail')">
+                            <div class="os-number">OS #2025-0852</div>
+                            <div class="os-title">Reparo de telhado</div>
+                            <div class="os-location">📍 Escola Municipal Vila Galvão</div>
+                            <div style="margin: 8px 0; color: #666; font-size: 12px;">
+                                🙋‍♂️ Maria Santos - Secretaria de Educação
+                            </div>
+                            <div class="os-tags">
+                                <span class="tag normal">NORMAL</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Brita (m³)</label>
-                            <input type="number" class="form-input" id="brita" step="0.1">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Tinta (litros)</label>
-                            <input type="number" class="form-input" id="tinta" step="0.1">
+
+                        <div class="os-card">
+                            <div class="os-number">OS #2025-0853</div>
+                            <div class="os-title">Pintura externa</div>
+                            <div class="os-location">📍 UBS Centro</div>
+                            <div style="margin: 8px 0; color: #666; font-size: 12px;">
+                                🙋‍♂️ Carlos Lima - SAR02
+                            </div>
+                            <div class="os-tags">
+                                <span class="tag baixa">BAIXA</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div id="teamSection" style="display: none;">
-                    <h3 style="margin: 20px 0 10px 0; color: #2c3e50;">Equipe de Execução</h3>
-                    <div class="team-grid">
-                        <div class="form-group">
-                            <label class="form-label">Pedreiro</label>
-                            <input type="text" class="form-input" id="pedreiro">
+                    <div class="kanban-column">
+                        <div class="kanban-header">
+                            <h3>🟧 Validação</h3>
+                            <span class="badge">5</span>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Ajudante</label>
-                            <input type="text" class="form-input" id="ajudante">
+                        
+                        <div class="os-card">
+                            <div class="os-number">OS #2025-0847</div>
+                            <div class="os-title">Vazamento hidráulico</div>
+                            <div class="os-location">📍 CEU Continental</div>
+                            <div style="margin: 8px 0; color: #666; font-size: 12px;">
+                                🙋‍♂️ Ana Costa - Diretoria CEU
+                            </div>
+                            <div class="os-tags">
+                                <span class="tag urgente">URGENTE</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Horas Trabalhadas</label>
-                            <input type="number" class="form-input" id="horasTrabalhadas" step="0.5">
+                    </div>
+
+                    <div class="kanban-column">
+                        <div class="kanban-header">
+                            <h3>🟦 Vistoria</h3>
+                            <span class="badge">3</span>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Data de Execução</label>
-                            <input type="date" class="form-input" id="dataExecucao">
+                        
+                        <div class="os-card">
+                            <div class="os-number">OS #2025-0845</div>
+                            <div class="os-title">Troca de lâmpadas</div>
+                            <div class="os-location">📍 Biblioteca Municipal</div>
+                            <div style="margin: 8px 0; color: #666; font-size: 12px;">
+                                🙋‍♂️ Pedro Oliveira - Cultura
+                            </div>
+                            <div class="os-tags">
+                                <span class="tag normal">NORMAL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kanban-column">
+                        <div class="kanban-header">
+                            <h3>🟫 Programada</h3>
+                            <span class="badge">12</span>
+                        </div>
+                        
+                        <div class="os-card">
+                            <div class="os-number">OS #2025-0840</div>
+                            <div class="os-title">Reforma do banheiro</div>
+                            <div class="os-location">📍 Centro de Saúde Ponte Grande</div>
+                            <div style="margin: 8px 0; color: #666; font-size: 12px;">
+                                🙋‍♂️ Dra. Fernanda - Coordenação UBS
+                            </div>
+                            <div class="os-tags">
+                                <span class="tag normal">NORMAL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kanban-column">
+                        <div class="kanban-header">
+                            <h3>🟩 Em Execução</h3>
+                            <span class="badge">7</span>
+                        </div>
+                        
+                        <div class="os-card">
+                            <div class="os-number">OS #2025-0835</div>
+                            <div class="os-title">Conserto do portão</div>
+                            <div class="os-location">📍 EMEI Jardim São João</div>
+                            <div style="margin: 8px 0; color: #666; font-size: 12px;">
+                                🙋‍♂️ Lucia Ferreira - Diretora EMEI
+                            </div>
+                            <div class="os-tags">
+                                <span class="tag normal">NORMAL</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
-                <button class="btn btn-primary" onclick="saveTask()">Salvar</button>
-                <button class="btn btn-primary" onclick="advanceTask()">Avançar Etapa</button>
+
+            <!-- Nova OS Tab -->
+            <div id="nova-os" class="tab-content">
+                <h2 style="margin-bottom: 20px; color: #2c3e50;">➕ Nova Ordem de Serviço</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <div class="form-group">
+                            <label for="sei-number">Número do SEI (opcional)</label>
+                            <input type="text" id="sei-number" placeholder="Ex: 1129.2025/0000916-7">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="solicitante">Solicitante *</label>
+                            <input type="text" id="solicitante" placeholder="Nome completo" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="orgao">Órgão/Secretaria *</label>
+                            <select id="orgao" required>
+                                <option value="">Selecione...</option>
+                                <option value="educacao">Secretaria de Educação</option>
+                                <option value="saude">Secretaria de Saúde</option>
+                                <option value="cultura">Secretaria de Cultura</option>
+                                <option value="sar">Secretaria de Adm. Regionais</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="local">Local do Serviço *</label>
+                            <input type="text" id="local" placeholder="Ex: CEU Continental, UBS Centro..." required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tipo-servico">Tipo de Serviço *</label>
+                            <select id="tipo-servico" onchange="showAISuggestions()" required>
+                                <option value="">Selecione...</option>
+                                <option value="hidraulica">Hidráulica</option>
+                                <option value="eletrica">Elétrica</option>
+                                <option value="pintura">Pintura</option>
+                                <option value="carpintaria">Carpintaria</option>
+                                <option value="serralheria">Serralheria</option>
+                                <option value="alvenaria">Alvenaria</option>
+                                <option value="telhado">Telhado</option>
+                                <option value="limpeza">Limpeza</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="urgencia">Urgência *</label>
+                            <select id="urgencia" required>
+                                <option value="">Selecione...</option>
+                                <option value="urgente">🔴 Urgente (risco/segurança)</option>
+                                <option value="normal">🟡 Normal (até 15 dias)</option>
+                                <option value="baixa">🟢 Baixa (até 30 dias)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group">
+                            <label for="descricao">Descrição do Problema *</label>
+                            <textarea id="descricao" rows="6" placeholder="Descreva detalhadamente o problema encontrado..." required></textarea>
+                        </div>
+
+                        <div id="ai-suggestions" class="ai-suggestions" style="display: none;">
+                            <div class="ai-header">
+                                <span class="ai-icon">🧠</span>
+                                <strong>Sugestões Inteligentes - Base de Conhecimento</strong>
+                            </div>
+                            <div id="suggestions-content">
+                                <!-- Suggestions will be populated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fotos">Fotos (opcional)</label>
+                            <input type="file" id="fotos" multiple accept="image/*">
+                            <small style="color: #666;">Máximo 5 fotos, 10MB cada</small>
+                        </div>
+
+                        <div style="margin-top: 30px;">
+                            <button class="btn btn-success" onclick="createOS()">✅ Criar Ordem de Serviço</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Relatórios Tab -->
+            <div id="relatorios" class="tab-content">
+                <h2 style="margin-bottom: 20px; color: #2c3e50;">📈 Relatórios e Analytics</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                        <h3 style="margin-bottom: 15px;">📊 OS por Tipo de Serviço</h3>
+                        <div style="margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>🔧 Hidráulica</span>
+                                <span><strong>34 OS</strong></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>⚡ Elétrica</span>
+                                <span><strong>28 OS</strong></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 70%;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>🎨 Pintura</span>
+                                <span><strong>22 OS</strong></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 55%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                        <h3 style="margin-bottom: 15px;">⏱️ Tempo Médio por Divisão</h3>
+                        <div style="margin-bottom: 15px;">
+                            <strong>SAR03.01 (Construção)</strong><br>
+                            <span style="color: #666;">Tempo médio: 6.8 dias</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 68%;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <strong>SAR03.03 (Manutenção)</strong><br>
+                            <span style="color: #666;">Tempo médio: 3.2 dias</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 32%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; text-align: center;">
+                    <button class="btn" onclick="alert('Relatório detalhado será gerado em PDF')">📄 Gerar Relatório Completo (PDF)</button>
+                    <button class="btn" style="margin-left: 10px;" onclick="alert('Dados exportados para Excel')">📊 Exportar para Excel</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal de Nova OS -->
-    <div id="newOSModal" class="modal">
+    <!-- Modal for OS Details -->
+    <div id="os-detail" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">Nova Ordem de Serviço</div>
-                <button class="close-btn" onclick="closeNewOSModal()">&times;</button>
+            <span class="close" onclick="closeModal('os-detail')">&times;</span>
+            <h2>🔍 OS #2025-0852 - Detalhes</h2>
+            
+            <div style="margin: 20px 0;">
+                <strong>📍 Local:</strong> Escola Municipal Vila Galvão<br>
+                <strong>🙋‍♂️ Solicitante:</strong> Maria Santos - Secretaria de Educação<br>
+                <strong>📅 Data:</strong> 20/05/2025<br>
+                <strong>🏷️ Tipo:</strong> Manutenção - Telhado<br>
+                <strong>⚡ Urgência:</strong> Normal
             </div>
-            <div class="modal-body">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">Número SEI *</label>
-                        <input type="text" class="form-input" id="newSeiNumber" placeholder="1129.2025/000000-0" required>
+
+            <div class="ai-suggestions">
+                <div class="ai-header">
+                    <span class="ai-icon">🧠</span>
+                    <strong>Sugestões da Base de Conhecimento</strong>
+                </div>
+                <div class="suggestion-item">
+                    <strong>💡 Caso Similar Encontrado:</strong><br>
+                    OS #2024-1247 - Reparo de telhado na EMEI Jardim Adriana (Nov/2024)<br>
+                    <strong>Materiais usados:</strong> Telhas cerâmicas (50 un), Argamassa (8 sacos)<br>
+                    <strong>Tempo:</strong> 3 dias | <strong>Equipe:</strong> SAR03.03-A<br>
+                    <a href="#" style="color: #3498db;">📋 Ver relatório completo desta OS</a>
+                </div>
+                <div class="suggestion-item">
+                    <strong>📦 Materiais Recomendados:</strong><br>
+                    • Telhas cerâmicas (estimativa: 45-60 unidades)<br>
+                    • Argamassa colante (6-10 sacos)<br>
+                    • Impermeabilizante (2 latas de 18L)
+                </div>
+            </div>
+
+            <div style="margin: 20px 0;">
+                <h3>📝 Descrição do Problema:</h3>
+                <p style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                    "Goteiras no telhado da sala de aula 3 e corredor principal. Problema se agrava durante chuvas intensas, 
+                    prejudicando as atividades escolares. Algumas telhas aparentam estar quebradas ou deslocadas."
+                </p>
+            </div>
+
+            <div style="margin: 20px 0;">
+                <h3>📸 Fotos Anexadas:</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+                    <div style="background: #e9ecef; padding: 20px; text-align: center; border-radius: 5px;">
+                        🖼️ Foto 1<br><small>Goteira sala 3</small>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Prioridade *</label>
-                        <select class="form-select" id="newPriority" required>
-                            <option value="">Selecione...</option>
-                            <option value="baixa">Baixa</option>
-                            <option value="media">Média</option>
-                            <option value="alta">Alta</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Tipo de Serviço *</label>
-                        <select class="form-select" id="newServiceType" required>
-                            <option value="">Selecione...</option>
-                            <option value="manutencao">Manutenção</option>
-                            <option value="construcao">Construção</option>
-                            <option value="reforma">Reforma</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Divisão Responsável *</label>
-                        <select class="form-select" id="newDivision" required>
-                            <option value="">Selecione...</option>
-                            <option value="SAR03.01">SAR03.01 - Construção</option>
-                            <option value="SAR03.03">SAR03.03 - Manutenção</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Local *</label>
-                        <input type="text" class="form-input" id="newLocation" placeholder="Ex: UBS Vila Galvão" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Secretaria Solicitante *</label>
-                        <select class="form-select" id="newDepartment" required>
-                            <option value="">Selecione...</option>
-                            <option value="saude">Secretaria de Saúde</option>
-                            <option value="educacao">Secretaria de Educação</option>
-                            <option value="obras">Secretaria de Obras</option>
-                            <option value="meio-ambiente">Secretaria de Meio Ambiente</option>
-                            <option value="esportes">Secretaria de Esportes</option>
-                        </select>
-                    </div>
-                    <div class="form-group full-width">
-                        <label class="form-label">Título do Serviço *</label>
-                        <input type="text" class="form-input" id="newServiceTitle" placeholder="Ex: Reparo hidráulico - torneira banheiro" required>
-                    </div>
-                    <div class="form-group full-width">
-                        <label class="form-label">Descrição Detalhada *</label>
-                        <textarea class="form-textarea" id="newDescription" placeholder="Descreva detalhadamente o serviço solicitado..." required></textarea>
+                    <div style="background: #e9ecef; padding: 20px; text-align: center; border-radius: 5px;">
+                        🖼️ Foto 2<br><small>Telhas quebradas</small>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeNewOSModal()">Cancelar</button>
-                <button class="btn btn-primary" onclick="createNewOS()">Criar OS</button>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button class="btn" onclick="alert('OS movida para Validação')">✅ Validar e Prosseguir</button>
+                <button class="btn" style="margin-left: 10px; background: #e74c3c;" onclick="alert('Mais informações solicitadas')">❓ Solicitar Mais Informações</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Dados mockados das OS
-        const osData = {
-            'os001': {
-                seiNumber: '1129.2025/000916-7',
-                status: 'recebido',
-                priority: 'alta',
-                serviceType: 'manutencao',
-                location: 'UBS Vila Galvão',
-                department: 'Secretaria de Saúde',
-                responsible: '',
-                openDate: '2025-05-22',
-                serviceTitle: 'Reparo hidráulico - UBS Vila Galvão',
-                description: 'Vazamento na torneira do banheiro feminino, necessário reparo urgente',
-                observations: 'Urgente - prejudicando atendimento'
-            },
-            'os002': {
-                seiNumber: '1129.2025/000861-6',
-                status: 'recebido',
-                priority: 'media',
-                serviceType: 'manutencao',
-                location: 'EMEF Santos Dumont',
-                department: 'Secretaria de Educação',
-                responsible: '',
-                openDate: '2025-05-21',
-                serviceTitle: 'Pintura EMEF Santos Dumont',
-                description: 'Pintura das salas de aula 1, 2 e 3 devido ao desgaste',
-                observations: 'Programar para período de férias escolares'
-            },
-            'os003': {
-                seiNumber: '1129.2025/000845-1',
-                status: 'vistoria',
-                priority: 'alta',
-                serviceType: 'manutencao',
-                location: 'Centro de Saúde Central',
-                department: 'Secretaria de Saúde',
-                responsible: 'joao',
-                openDate: '2025-05-20',
-                serviceTitle: 'Reparo telhado - Centro de Saúde',
-                description: 'Goteira no teto da recepção, necessário vistoria para dimensionamento',
-                observations: 'Possível troca de telhas'
-            }
-        };
-
-        function showTaskModal(osId) {
-            const modal = document.getElementById('taskModal');
-            const data = osData[osId];
-            
-            if (data) {
-                // Preencher campos
-                document.getElementById('seiNumber').value = data.seiNumber;
-                document.getElementById('status').value = data.status;
-                document.getElementById('priority').value = data.priority;
-                document.getElementById('serviceType').value = data.serviceType;
-                document.getElementById('location').value = data.location;
-                document.getElementById('department').value = data.department;
-                document.getElementById('responsible').value = data.responsible;
-                document.getElementById('openDate').value = data.openDate;
-                document.getElementById('serviceTitle').value = data.serviceTitle;
-                document.getElementById('description').value = data.description;
-                document.getElementById('observations').value = data.observations;
-                
-                // Mostrar seções condicionais baseadas no status
-                showConditionalSections(data.status);
-            }
-            
-            modal.style.display = 'block';
-        }
-
-        function showConditionalSections(status) {
-            const materialsSection = document.getElementById('materialsSection');
-            const teamSection = document.getElementById('teamSection');
-            
-            // Mostrar seções baseadas no status
-            if (status === 'execucao' || status === 'finalizado') {
-                materialsSection.style.display = 'block';
-                teamSection.style.display = 'block';
-            } else {
-                materialsSection.style.display = 'none';
-                teamSection.style.display = 'none';
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('taskModal').style.display = 'none';
-        }
-
-        function showNewOSModal() {
-            document.getElementById('newOSModal').style.display = 'block';
-        }
-
-        function closeNewOSModal() {
-            document.getElementById('newOSModal').style.display = 'none';
-            // Limpar formulário
-            const form = document.getElementById('newOSModal');
-            const inputs = form.querySelectorAll('input, textarea, select');
-            inputs.forEach(input => input.value = '');
-        }
-
-        function saveTask() {
-            // Simular salvamento
-            alert('Ordem de serviço atualizada com sucesso!');
-            closeModal();
-        }
-
-        function advanceTask() {
-            const status = document.getElementById('status').value;
-            const nextStatus = getNextStatus(status);
-            
-            if (nextStatus) {
-                document.getElementById('status').value = nextStatus;
-                showConditionalSections(nextStatus);
-                
-                // Simular atualização do kanban
-                alert(`Status alterado para: ${getStatusLabel(nextStatus)}`);
-            }
-        }
-
-        function getNextStatus(currentStatus) {
-            const statusFlow = {
-                'recebido': 'vistoria',
-                'vistoria': 'programacao',
-                'programacao': 'execucao',
-                'execucao': 'finalizado',
-                'finalizado': null
-            };
-            return statusFlow[currentStatus];
-        }
-
-        function getStatusLabel(status) {
-            const labels = {
-                'recebido': 'Recebido',
-                'vistoria': 'Vistoria',
-                'programacao': 'Programação',
-                'execucao': 'Execução',
-                'finalizado': 'Finalizado'
-            };
-            return labels[status];
-        }
-
-        function createNewOS() {
-            // Validação básica
-            const requiredFields = ['newSeiNumber', 'newPriority', 'newServiceType', 'newDivision', 'newLocation', 'newDepartment', 'newServiceTitle', 'newDescription'];
-            let isValid = true;
-            
-            requiredFields.forEach(fieldId => {
-                const field = document.getElementById(fieldId);
-                if (!field.value.trim()) {
-                    field.style.borderColor = '#dc3545';
-                    isValid = false;
-                } else {
-                    field.style.borderColor = '#e1e8ed';
-                }
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
             });
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
             
-            if (!isValid) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // AI Suggestions functionality
+        function showAISuggestions() {
+            const tipoServico = document.getElementById('tipo-servico').value;
+            const suggestionsDiv = document.getElementById('ai-suggestions');
+            const suggestionsContent = document.getElementById('suggestions-content');
+
+            if (tipoServico) {
+                suggestionsDiv.style.display = 'block';
+                
+                let suggestions = '';
+                
+                switch(tipoServico) {
+                    case 'hidraulica':
+                        suggestions = `
+                            <div class="suggestion-item">
+                                <strong>💡 Caso Similar:</strong> OS #2024-1156 - Vazamento na UBS Centro (Set/2024)<br>
+                                <strong>Materiais:</strong> Cano PVC 100mm (5m), Conexões (8 un), Vedante (2 tubos)<br>
+                                <strong>Tempo médio:</strong> 2,5 dias | <strong>Equipe mais eficiente:</strong> SAR03.03-B
+                            </div>
+                            <div class="suggestion-item">
+                                <strong>📦 Materiais Frequentes:</strong> Canos PVC, Conexões, Massa de vedação, Registro
+                            </div>
+                        `;
+                        break;
+                    case 'eletrica':
+                        suggestions = `
+                            <div class="suggestion-item">
+                                <strong>💡 Caso Similar:</strong> OS #2024-1278 - Quadro elétrico CEU Vila Galvão (Out/2024)<br>
+                                <strong>Materiais:</strong> Disjuntores 20A (4 un), Fios 2,5mm (50m), Quadro de distribuição<br>
+                                <strong>Tempo médio:</strong> 1,8 dias | <strong>Equipe mais eficiente:</strong> SAR03.03-A
+                            </div>
+                            <div class="suggestion-item">
+                                <strong>⚠️ Atenção:</strong> Sempre verificar se precisa desligar energia geral
+                            </div>
+                        `;
+                        break;
+                    case 'pintura':
+                        suggestions = `
+                            <div class="suggestion-item">
+                                <strong>💡 Caso Similar:</strong> OS #2024-1089 - Pintura externa Biblioteca Municipal (Ago/2024)<br>
+                                <strong>Materiais:</strong> Tinta acrílica (25L), Primer (10L), Rolo e pincéis<br>
+                                <strong>Tempo médio:</strong> 4,2 dias | <strong>Equipe mais eficiente:</strong> SAR03.03-C
+                            </div>
+                            <div class="suggestion-item">
+                                <strong>🌦️ Dica:</strong> Verificar previsão do tempo - evitar período chuvoso
+                            </div>
+                        `;
+                        break;
+                    case 'telhado':
+                        suggestions = `
+                            <div class="suggestion-item">
+                                <strong>💡 Caso Similar:</strong> OS #2024-1247 - Reparo telhado EMEI Jardim Adriana (Nov/2024)<br>
+                                <strong>Materiais:</strong> Telhas cerâmicas (60 un), Argamassa (8 sacos), Impermeabilizante<br>
+                                <strong>Tempo médio:</strong> 3,1 dias | <strong>Equipe mais eficiente:</strong> SAR03.03-A
+                            </div>
+                            <div class="suggestion-item">
+                                <strong>🔧 Materiais Padrão:</strong> Telhas, Argamassa, Impermeabilizante, Ripas de madeira
+                            </div>
+                        `;
+                        break;
+                    default:
+                        suggestions = `
+                            <div class="suggestion-item">
+                                <strong>💡 Dica:</strong> Casos similares serão sugeridos após seleção do tipo de serviço
+                            </div>
+                        `;
+                }
+                
+                suggestionsContent.innerHTML = suggestions;
+            } else {
+                suggestionsDiv.style.display = 'none';
+            }
+        }
+
+        // Create OS functionality
+        function createOS() {
+            const solicitante = document.getElementById('solicitante').value;
+            const orgao = document.getElementById('orgao').value;
+            const local = document.getElementById('local').value;
+            const tipoServico = document.getElementById('tipo-servico').value;
+            const urgencia = document.getElementById('urgencia').value;
+            const descricao = document.getElementById('descricao').value;
+
+            if (!solicitante || !orgao || !local || !tipoServico || !urgencia || !descricao) {
+                alert('❌ Por favor, preencha todos os campos obrigatórios marcados com *');
                 return;
             }
+
+            // Simulate OS creation
+            const osNumber = '2025-' + String(Math.floor(Math.random() * 1000) + 800).padStart(4, '0');
             
-            // Simular criação da OS
-            alert('Nova Ordem de Serviço criada com sucesso!\nNúmero SEI: ' + document.getElementById('newSeiNumber').value);
-            closeNewOSModal();
-            
-            // Simular adição no kanban (recarregar página para ver mudanças)
-            location.reload();
+            alert(`✅ Ordem de Serviço criada com sucesso!\n\n` +
+                  `📋 Número: OS #${osNumber}\n` +
+                  `🙋‍♂️ Solicitante: ${solicitante}\n` +
+                  `📍 Local: ${local}\n` +
+                  `🔧 Tipo: ${tipoServico}\n\n` +
+                  `📄 Um PDF de registro foi gerado automaticamente.\n` +
+                  `📧 Notificação enviada para a divisão responsável.`);
+
+            // Reset form
+            document.getElementById('solicitante').value = '';
+            document.getElementById('orgao').value = '';
+            document.getElementById('local').value = '';
+            document.getElementById('tipo-servico').value = '';
+            document.getElementById('urgencia').value = '';
+            document.getElementById('descricao').value = '';
+            document.getElementById('ai-suggestions').style.display = 'none';
+
+            // Switch to kanban tab to show the new OS
+            showTab('kanban');
         }
 
-        // Eventos de teclado para melhor UX
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-                closeNewOSModal();
-            }
-        });
-
-        // Fechar modal clicando fora
-        window.addEventListener('click', function(e) {
-            const taskModal = document.getElementById('taskModal');
-            const newOSModal = document.getElementById('newOSModal');
-            
-            if (e.target === taskModal) {
-                closeModal();
-            }
-            if (e.target === newOSModal) {
-                closeNewOSModal();
-            }
-        });
-
-        // Simular integração com SEI
-        function syncWithSEI() {
-            alert('Sincronizando com SEI...\n✅ 3 novas solicitações importadas\n✅ 2 atualizações processadas');
+        // Modal functionality
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
         }
 
-        // Auto-sync a cada 5 minutos (simulado)
-        setInterval(() => {
-            console.log('Auto-sync com SEI executado');
-        }, 300000);
-
-        // Função para gerar relatórios
-        function generateReport() {
-            const reportData = {
-                totalOS: 187,
-                abertas: 23,
-                emAndamento: 8,
-                finalizadas: 156,
-                tempoMedio: 4.2,
-                servicosMaisComuns: ['Hidráulica', 'Pintura', 'Elétrica', 'Serralheria'],
-                materiaisMaisUsados: ['Tinta', 'Cimento', 'Areia', 'Conectores hidráulicos']
-            };
-            
-            console.log('Relatório gerado:', reportData);
-            alert('Relatório gerado! Verifique o console para detalhes.');
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
         }
 
-        // Event listeners para filtros
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Simulate real-time updates
+        function simulateRealTimeUpdates() {
+            // This would normally connect to a WebSocket or polling mechanism
+            console.log('📡 Sistema conectado - atualizações em tempo real ativas');
+        }
+
+        // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
-            const filters = document.querySelectorAll('.filter-input, .filter-select');
-            filters.forEach(filter => {
-                filter.addEventListener('change', function() {
-                    console.log('Filtro aplicado:', this.id, this.value);
-                    // Aqui seria implementada a lógica de filtrage real
+            simulateRealTimeUpdates();
+            console.log('🚀 ZeloBoard inicializado com sucesso!');
+        });
+
+        // Drag and drop functionality for Kanban (basic simulation)
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.os-card');
+            cards.forEach(card => {
+                card.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', '');
                 });
             });
         });
+
+        // Demo data refresh simulation
+        setInterval(() => {
+            // Simulate small changes in the dashboard numbers
+            const statCards = document.querySelectorAll('.stat-card h3');
+            if (Math.random() > 0.95) { // 5% chance every interval
+                const randomCard = statCards[Math.floor(Math.random() * statCards.length)];
+                const currentValue = parseInt(randomCard.textContent);
+                if (!isNaN(currentValue)) {
+                    const change = Math.random() > 0.5 ? 1 : -1;
+                    randomCard.textContent = Math.max(0, currentValue + change);
+                    randomCard.style.animation = 'pulse 0.5s';
+                    setTimeout(() => {
+                        randomCard.style.animation = '';
+                    }, 500);
+                }
+            }
+        }, 3000);
     </script>
+
+    <style>
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .os-card {
+            draggable: true;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+        }
+
+        /* Enhanced mobile responsiveness */
+        @media (max-width: 480px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                border-radius: 0;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+
+        /* Loading states */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #3498db;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Success animations */
+        .success-flash {
+            animation: successFlash 0.6s ease-in-out;
+        }
+
+        @keyframes successFlash {
+            0%, 100% { background-color: transparent; }
+            50% { background-color: rgba(39, 174, 96, 0.2); }
+        }
+    </style>
 </body>
 </html>
