@@ -2,10 +2,37 @@
 let featherReady = false;
 let featherQueue = [];
 
-// Make these functions available globally
-window.showTab = showTab;
+// Create a single styleSheet for all styles
+const appStyles = document.createElement('style');
+document.head.appendChild(appStyles);
+
+// Add all necessary styles
+function updateStyles() {
+    appStyles.textContent = `
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+    
+    @keyframes slideOut {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+    }
+
+    ${notificationStyles}
+`;
+}
+
+// Declare all functions that need to be globally available
 window.openModal = openModal;
 window.closeModal = closeModal;
+window.showTab = showTab;
 window.createOS = createOS;
 window.showAISuggestions = showAISuggestions;
 window.exportToPDF = exportToPDF;
@@ -50,24 +77,44 @@ document.addEventListener('DOMContentLoaded', function() {
     loadFeather
         .then(() => {
             console.log('✨ Feather carregado com sucesso!');
-            return initializeFeatherIcons(); // Return the promise
+            return initializeFeatherIcons();
         })
         .then(() => {
             featherReady = true;
             initializeApp();
             simulateRealTimeUpdates();
-            // Process any queued operations
             processFeatherQueue();
-            // Initialize tab functionality
             initializeTabs();
             console.log('🚀 ZeloBoard inicializado com sucesso!');
         })
         .catch(error => {
             console.warn('❌ Erro ao carregar Feather:', error);
             handleFeatherFailure();
-            // Still initialize tabs even if Feather fails
             initializeTabs();
         });
+
+    // Add event listeners for modals
+    window.addEventListener('click', function(event) {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                const modalId = modal.id;
+                closeModal(modalId);
+            }
+        });
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (modal.style.display === 'block') {
+                    const modalId = modal.id;
+                    closeModal(modalId);
+                }
+            });
+        }
+    });
 });
 
 // Initialize tab functionality
@@ -475,12 +522,21 @@ function resetForm() {
     }
 }
 
-// Modal functionality with Feather handling
+// Modal functionality
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
+        
+        // Focus on first input if it's the new OS modal
+        if (modalId === 'nova-os-modal') {
+            const firstInput = modal.querySelector('input, select, textarea');
+            if (firstInput) {
+                firstInput.focus();
+            }
+        }
+        
         safeFeatherReplace();
     }
 }
@@ -488,34 +544,20 @@ function openModal(modalId) {
 function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-}
-
-// Close modal when clicking outside of it
-window.addEventListener('click', function(event) {
-    const modals = document.querySelectorAll('.modal');
-    modals.forEach(modal => {
-        if (event.target === modal) {
+        // Add closing animation
+        modal.style.animation = 'fadeOut 0.3s ease';
+        modal.querySelector('.modal-content').style.animation = 'slideOut 0.3s ease';
+        
+        // Wait for animation to complete
+        setTimeout(() => {
             modal.style.display = 'none';
             document.body.style.overflow = 'auto';
-        }
-    });
-});
-
-// Close modal on escape key
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        const modals = document.querySelectorAll('.modal');
-        modals.forEach(modal => {
-            if (modal.style.display === 'block') {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
+            // Reset animations
+            modal.style.animation = '';
+            modal.querySelector('.modal-content').style.animation = '';
+        }, 300);
     }
-});
+}
 
 // Notification system with Feather handling
 function showNotification(message, type = 'info') {
@@ -583,30 +625,32 @@ function simulateRealTimeUpdates() {
 
 // Initialize application
 function initializeApp() {
-    // Add event listeners for drag and drop (Kanban)
-    initializeKanbanDragAndDrop();
-    
-    // Add smooth scroll behavior
-    document.documentElement.style.scrollBehavior = 'smooth';
-    
-    // Initialize tooltips and other interactive elements
-    initializeInteractiveElements();
-    
-    // Add event listeners to tabs
-    addTabEventListeners();
+    updateStyles();
+    initializeTabs();
+    initializeEventListeners();
 }
 
-// Add event listeners to tabs
-function addTabEventListeners() {
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function(event) {
-            event.preventDefault();
-            const tabName = this.getAttribute('data-tab');
-            if (tabName) {
-                showTab(tabName, event);
+function initializeEventListeners() {
+    // Modal click outside listener
+    window.addEventListener('click', function(event) {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                closeModal(modal.id);
             }
         });
+    });
+
+    // Escape key listener
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (modal.style.display === 'block') {
+                    closeModal(modal.id);
+                }
+            });
+        }
     });
 }
 
@@ -695,7 +739,7 @@ function initializeInteractiveElements() {
     });
 }
 
-// Export functionality
+// Export functions
 function exportToPDF() {
     showNotification('Gerando relatório em PDF...', 'info');
     // Simulate PDF generation
@@ -858,8 +902,3 @@ const notificationStyles = `
         }
     }
 `;
-
-// Inject notification styles
-const styleSheet = document.createElement('style');
-styleSheet.textContent = notificationStyles;
-document.head.appendChild(styleSheet);

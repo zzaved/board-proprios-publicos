@@ -38,15 +38,16 @@
                 <i data-feather="trello"></i>
                 <span>Kanban OS</span>
             </button>
-            <button class="tab" data-tab="nova-os">
-                <i data-feather="plus-circle"></i>
-                <span>Nova OS</span>
-            </button>
             <button class="tab" data-tab="relatorios">
                 <i data-feather="trending-up"></i>
                 <span>Relatórios</span>
             </button>
         </div>
+
+        <!-- Floating Action Button for New OS -->
+        <button class="fab" onclick="openModal('nova-os-modal')">
+            <i data-feather="plus"></i>
+        </button>
 
         <div class="content">
             <!-- Dashboard Tab -->
@@ -335,13 +336,115 @@
                 </div>
             </div>
 
-            <!-- Nova OS Tab -->
-            <div id="nova-os" class="tab-content">
+            <!-- Relatórios Tab with updated icons -->
+            <div id="relatorios" class="tab-content">
                 <div class="page-header">
-                    <h2>Nova Ordem de Serviço</h2>
-                    <p class="page-subtitle">Registrar nova solicitação de manutenção</p>
+                    <h2>Relatórios</h2>
+                    <p class="page-subtitle">Analytics e dados estatísticos</p>
                 </div>
                 
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>
+                                <i data-feather="pie-chart"></i>
+                                OS por Tipo de Serviço
+                            </h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="chart-item">
+                                <div class="chart-info">
+                                    <i data-feather="droplet"></i>
+                                    <span>Hidráulica</span>
+                                    <strong>34 OS</strong>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 85%;"></div>
+                                </div>
+                            </div>
+                            <div class="chart-item">
+                                <div class="chart-info">
+                                    <i data-feather="zap"></i>
+                                    <span>Elétrica</span>
+                                    <strong>28 OS</strong>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 70%;"></div>
+                                </div>
+                            </div>
+                            <div class="chart-item">
+                                <div class="chart-info">
+                                    <i data-feather="tool"></i>
+                                    <span>Pintura</span>
+                                    <strong>22 OS</strong>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 55%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>
+                                <i data-feather="clock"></i>
+                                Tempo Médio por Divisão
+                            </h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="time-item">
+                                <div class="time-info">
+                                    <i data-feather="users"></i>
+                                    <strong>SAR03.01 (Construção)</strong>
+                                    <span>Tempo médio: 6.8 dias</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 68%;"></div>
+                                </div>
+                            </div>
+                            <div class="time-item">
+                                <div class="time-info">
+                                    <i data-feather="users"></i>
+                                    <strong>SAR03.03 (Manutenção)</strong>
+                                    <span>Tempo médio: 3.2 dias</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 32%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-actions">
+                    <button class="btn btn-secondary" onclick="exportToPDF()">
+                        <i data-feather="file-text"></i>
+                        Gerar Relatório Completo (PDF)
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportToExcel()">
+                        <i data-feather="download"></i>
+                        Exportar para Excel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for New OS -->
+    <div id="nova-os-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>
+                    <i data-feather="plus-circle"></i>
+                    Nova Ordem de Serviço
+                </h2>
+                <button class="modal-close" onclick="closeModal('nova-os-modal')">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
                 <form id="nova-os-form" class="form-container">
                     <div class="form-section">
                         <h3>Informações Básicas</h3>
@@ -452,97 +555,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-
-            <!-- Relatórios Tab -->
-            <div id="relatorios" class="tab-content">
-                <div class="page-header">
-                    <h2>Relatórios</h2>
-                    <p class="page-subtitle">Analytics e dados estatísticos</p>
-                </div>
-                
-                <div class="dashboard-grid">
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <h3>
-                                <i data-feather="bar-chart"></i>
-                                OS por Tipo de Serviço
-                            </h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="chart-item">
-                                <div class="chart-info">
-                                    <i data-feather="droplet"></i>
-                                    <span>Hidráulica</span>
-                                    <strong>34 OS</strong>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 85%;"></div>
-                                </div>
-                            </div>
-                            <div class="chart-item">
-                                <div class="chart-info">
-                                    <i data-feather="zap"></i>
-                                    <span>Elétrica</span>
-                                    <strong>28 OS</strong>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 70%;"></div>
-                                </div>
-                            </div>
-                            <div class="chart-item">
-                                <div class="chart-info">
-                                    <i data-feather="edit"></i>
-                                    <span>Pintura</span>
-                                    <strong>22 OS</strong>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 55%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <h3>
-                                <i data-feather="clock"></i>
-                                Tempo Médio por Divisão
-                            </h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="time-item">
-                                <div class="time-info">
-                                    <strong>SAR03.01 (Construção)</strong>
-                                    <span>Tempo médio: 6.8 dias</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 68%;"></div>
-                                </div>
-                            </div>
-                            <div class="time-item">
-                                <div class="time-info">
-                                    <strong>SAR03.03 (Manutenção)</strong>
-                                    <span>Tempo médio: 3.2 dias</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 32%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="report-actions">
-                    <button class="btn btn-secondary" onclick="exportToPDF()">
-                        <i data-feather="file-text"></i>
-                        Gerar Relatório Completo (PDF)
-                    </button>
-                    <button class="btn btn-secondary" onclick="exportToExcel()">
-                        <i data-feather="download"></i>
-                        Exportar para Excel
-                    </button>
-                </div>
             </div>
         </div>
     </div>
