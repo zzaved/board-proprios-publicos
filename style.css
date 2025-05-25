@@ -1767,6 +1767,71 @@ body {
     }
 }
 
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-primary: #f2f2f7;
+        --text-secondary: #98989d;
+        --text-tertiary: #636366;
+        --background-primary: #1c1c1e;
+        --background-secondary: #2c2c2e;
+        --border-color: #38383a;
+    }
+    
+    body {
+        background: #000;
+        color: var(--text-primary);
+    }
+    
+    .header {
+        background: rgba(28, 28, 30, 0.8);
+        border-bottom-color: var(--border-color);
+    }
+    
+    .content,
+    .dashboard-card,
+    .form-section,
+    .kanban-column,
+    .report-card,
+    .warehouse-content,
+    .production-content {
+        background: var(--background-primary);
+        border-color: var(--border-color);
+    }
+    
+    .stat-card,
+    .os-card,
+    .report-item,
+    .production-item {
+        background: var(--background-secondary);
+        border-color: var(--border-color);
+    }
+    
+    .btn-secondary {
+        background: var(--background-secondary);
+        color: var(--text-primary);
+        border-color: var(--border-color);
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea,
+    .search-bar input {
+        background: var(--background-secondary);
+        border-color: var(--border-color);
+        color: var(--text-primary);
+    }
+    
+    .warehouse-table,
+    .spreadsheet-table {
+        background: var(--background-primary);
+    }
+    
+    .warehouse-table th {
+        background: var(--background-secondary);
+    }
+}
+
 /* Print Styles */
 @media print {
     .header,
