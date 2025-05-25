@@ -1188,3 +1188,87 @@ console.log('   • Produção da fábrica');
 console.log('   • Sistema de notificações');
 console.log('   • Interface responsiva');
 console.log('💡 Sistema pronto para demonstração!');
+
+// Funções para baixar e imprimir relatório de OS individual
+function downloadOSReportXLS(osNumber, seiNumber) {
+    const osData = getOSDataByNumber(osNumber, seiNumber);
+    if (!osData) {
+        showNotification('Dados da OS não encontrados.', 'error');
+        return;
+    }
+    const now = new Date();
+    const emitDate = now.toLocaleString('pt-BR');
+    const csv = [
+        ['Número OS', 'SEI', 'Título', 'Local', 'Solicitante', 'Divisão', 'Status', 'Data de Criação', 'Descrição', 'Emitido em'],
+        [
+            osData.osNumber || osNumber,
+            osData.seiNumber || seiNumber,
+            osData.title || '',
+            osData.location || '',
+            osData.requester || '',
+            osData.division || '',
+            osData.status || '',
+            osData.createdDate ? new Date(osData.createdDate).toLocaleString('pt-BR') : '',
+            osData.description || '',
+            emitDate
+        ]
+    ].map(row => row.map(field => '"' + String(field).replace(/"/g, '""') + '"').join(';')).join('\n');
+    const blob = new Blob([csv], { type: 'application/vnd.ms-excel' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `Relatorio_OS_${osData.osNumber || osNumber}.xls`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    showNotification(`Relatório XLS gerado para OS #${osData.osNumber || osNumber} (Emitido em: ${emitDate})`, 'success');
+}
+
+function printOSReport(osNumber, seiNumber) {
+    const osData = getOSDataByNumber(osNumber, seiNumber);
+    if (!osData) {
+        showNotification('Dados da OS não encontrados.', 'error');
+        return;
+    }
+    const now = new Date();
+    const emitDate = now.toLocaleString('pt-BR');
+    const win = window.open('', '_blank');
+    win.document.write(`
+        <html><head><title>Relatório OS #${osData.osNumber || osNumber}</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 40px; }
+            h2 { color: #007aff; }
+            table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+            td, th { border: 1px solid #ccc; padding: 8px; }
+            th { background: #f2f2f2; }
+            .emitido { margin-top: 24px; font-size: 13px; color: #888; }
+        </style></head><body>
+        <h2>Relatório da Ordem de Serviço</h2>
+        <table>
+            <tr><th>Número OS</th><td>${osData.osNumber || osNumber}</td></tr>
+            <tr><th>SEI</th><td>${osData.seiNumber || seiNumber}</td></tr>
+            <tr><th>Título</th><td>${osData.title || ''}</td></tr>
+            <tr><th>Local</th><td>${osData.location || ''}</td></tr>
+            <tr><th>Solicitante</th><td>${osData.requester || ''}</td></tr>
+            <tr><th>Divisão</th><td>${osData.division || ''}</td></tr>
+            <tr><th>Status</th><td>${osData.status || ''}</td></tr>
+            <tr><th>Data de Criação</th><td>${osData.createdDate ? new Date(osData.createdDate).toLocaleString('pt-BR') : ''}</td></tr>
+            <tr><th>Descrição</th><td>${osData.description || ''}</td></tr>
+        </table>
+        <div class="emitido">Emitido em: ${emitDate}</div>
+        <script>window.onload = function() { window.print(); }</script>
+        </body></html>
+    `);
+    win.document.close();
+    showNotification(`Relatório de impressão gerado para OS #${osData.osNumber || osNumber} (Emitido em: ${emitDate})`, 'success');
+}
+
+function getOSDataByNumber(osNumber, seiNumber) {
+    // Tenta buscar pelo número OS (removendo prefixo se necessário)
+    let key = osNumber.replace(/^OS #/, '');
+    if (osDatabase.has(key)) return osDatabase.get(key);
+    // Busca por SEI se não encontrar pelo número
+    for (const os of osDatabase.values()) {
+        if (os.seiNumber === seiNumber) return os;
+    }
+    return null;
+}
