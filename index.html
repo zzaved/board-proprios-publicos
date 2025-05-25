@@ -19,7 +19,7 @@
             </div>
             <div class="user-details">
                 <span class="user-name">João Silva</span>
-                <span class="user-role">SAR03</span>
+                <span class="user-role">Chefe de Seção SAR03</span>
             </div>
             <div class="date">
                 <i data-feather="calendar"></i>
@@ -41,6 +41,14 @@
             <button class="tab" data-tab="relatorios">
                 <i data-feather="trending-up"></i>
                 <span>Relatórios</span>
+            </button>
+            <button class="tab" data-tab="almoxarifado">
+                <i data-feather="package"></i>
+                <span>Almoxarifado</span>
+            </button>
+            <button class="tab" data-tab="fabrica">
+                <i data-feather="settings"></i>
+                <span>Fábrica</span>
             </button>
         </div>
 
@@ -69,6 +77,15 @@
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">
+                            <i data-feather="eye"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>12</h3>
+                            <p>Aguardando Vistoria</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
                             <i data-feather="play-circle"></i>
                         </div>
                         <div class="stat-content">
@@ -85,15 +102,6 @@
                             <p>Finalizadas (Mês)</p>
                         </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i data-feather="clock"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3>4.2 dias</h3>
-                            <p>Tempo Médio</p>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="dashboard-grid">
@@ -101,38 +109,28 @@
                         <div class="card-header">
                             <h3>
                                 <i data-feather="pie-chart"></i>
-                                OS por Tipo de Serviço
+                                OS por Divisão
                             </h3>
                         </div>
                         <div class="card-content">
                             <div class="chart-item">
                                 <div class="chart-info">
-                                    <i data-feather="droplet"></i>
-                                    <span>Hidráulica</span>
+                                    <i data-feather="tool"></i>
+                                    <span>SAR03.01 (Construção)</span>
                                     <strong>34 OS</strong>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 85%;"></div>
+                                    <div class="progress-fill" style="width: 68%;"></div>
                                 </div>
                             </div>
                             <div class="chart-item">
                                 <div class="chart-info">
-                                    <i data-feather="zap"></i>
-                                    <span>Elétrica</span>
-                                    <strong>28 OS</strong>
+                                    <i data-feather="settings"></i>
+                                    <span>SAR03.03 (Manutenção)</span>
+                                    <strong>39 OS</strong>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 70%;"></div>
-                                </div>
-                            </div>
-                            <div class="chart-item">
-                                <div class="chart-info">
-                                    <i data-feather="tool"></i>
-                                    <span>Pintura</span>
-                                    <strong>22 OS</strong>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 55%;"></div>
+                                    <div class="progress-fill" style="width: 78%;"></div>
                                 </div>
                             </div>
                         </div>
@@ -174,8 +172,8 @@
             <!-- Kanban Tab -->
             <div id="kanban" class="tab-content">
                 <div class="page-header">
-                    <h2>Kanban</h2>
-                    <p class="page-subtitle">Fluxo de ordens de serviço</p>
+                    <h2>Kanban - Fluxo de Ordens de Serviço</h2>
+                    <p class="page-subtitle">Acompanhe o ciclo completo: SEI → OS → Vistoria → Execução → Fechamento</p>
                 </div>
                 
                 <div class="kanban-board">
@@ -190,7 +188,7 @@
                         
                         <div class="os-card" onclick="openModal('os-detail')">
                             <div class="sei-number">SEI: 1129.2025/0000916-7</div>
-                            <div class="os-number">OS #2025-0852</div>
+                            <div class="os-number">Aguardando OS</div>
                             <div class="os-title">Reparo de telhado</div>
                             <div class="os-location">
                                 <i data-feather="map-pin"></i>
@@ -204,6 +202,12 @@
                                 <i data-feather="calendar"></i>
                                 Recebido: 24/05/2025
                             </div>
+                            <div class="card-actions">
+                                <button class="btn btn-primary" onclick="event.stopPropagation(); createOSFromSEI('1129.2025/0000916-7')">
+                                    <i data-feather="plus"></i>
+                                    Abrir OS
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -216,7 +220,7 @@
                             <div class="kanban-count">5</div>
                         </div>
                         
-                        <div class="os-card">
+                        <div class="os-card" onclick="openModal('vistoria-modal')">
                             <div class="sei-number">SEI: 1129.2025/0000914-2</div>
                             <div class="os-number">OS #2025-0847</div>
                             <div class="os-title">Vazamento hidráulico</div>
@@ -231,6 +235,10 @@
                             <div class="os-date">
                                 <i data-feather="calendar"></i>
                                 Vistoria agendada: 25/05/2025
+                            </div>
+                            <div class="os-division">
+                                <i data-feather="tool"></i>
+                                SAR03.03 - Manutenção
                             </div>
                         </div>
                     </div>
@@ -256,9 +264,13 @@
                                 <i data-feather="user"></i>
                                 Dr. Roberto Silva - Coordenador UBS
                             </div>
-                            <div class="os-status">
-                                <i data-feather="alert-circle"></i>
-                                Risco de segurança
+                            <div class="os-status urgent">
+                                <i data-feather="alert-triangle"></i>
+                                Risco de segurança - Custo: R$ 2.800,00
+                            </div>
+                            <div class="os-division">
+                                <i data-feather="tool"></i>
+                                SAR03.03 - Manutenção
                             </div>
                         </div>
                     </div>
@@ -286,7 +298,11 @@
                             </div>
                             <div class="os-estimate">
                                 <i data-feather="clock"></i>
-                                Previsão: 15 dias
+                                Previsão: 15 dias - Custo: R$ 1.250,00
+                            </div>
+                            <div class="os-division">
+                                <i data-feather="tool"></i>
+                                SAR03.01 - Construção
                             </div>
                         </div>
                     </div>
@@ -300,7 +316,7 @@
                             <div class="kanban-count">7</div>
                         </div>
                         
-                        <div class="os-card">
+                        <div class="os-card" onclick="openModal('daily-report-modal')">
                             <div class="sei-number">SEI: 1129.2025/0000905-8</div>
                             <div class="os-number">OS #2025-0835</div>
                             <div class="os-title">Reforma do pátio</div>
@@ -314,11 +330,15 @@
                             </div>
                             <div class="os-progress">
                                 <i data-feather="trending-up"></i>
-                                Progresso: 60%
+                                Progresso: 60% - Custo: R$ 8.500,00
                             </div>
                             <div class="daily-report-status">
                                 <i data-feather="check-circle"></i>
                                 Relatório diário atualizado
+                            </div>
+                            <div class="os-division">
+                                <i data-feather="tool"></i>
+                                SAR03.01 - Construção
                             </div>
                         </div>
                     </div>
@@ -332,7 +352,7 @@
                             <div class="kanban-count">4</div>
                         </div>
                         
-                        <div class="os-card">
+                        <div class="os-card" onclick="openModal('closing-modal')">
                             <div class="sei-number">SEI: 1129.2025/0000901-3</div>
                             <div class="os-number">OS #2025-0830</div>
                             <div class="os-title">Troca de portas</div>
@@ -346,302 +366,285 @@
                             </div>
                             <div class="os-completion">
                                 <i data-feather="check-circle"></i>
-                                Concluído em: 23/05/2025
+                                Concluído em: 23/05/2025 - Custo Final: R$ 3.200,00
                             </div>
                             <div class="sei-status">
                                 <i data-feather="file-text"></i>
-                                Documentação enviada ao SEI
+                                Aguardando envio para SEI
+                            </div>
+                            <div class="os-division">
+                                <i data-feather="tool"></i>
+                                SAR03.03 - Manutenção
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Relatórios Tab with updated icons -->
+            <!-- Relatórios Tab -->
             <div id="relatorios" class="tab-content">
                 <div class="page-header">
-                    <div class="header-content">
-                        <h2>Analytics & Relatórios</h2>
-                        <p class="subtitle">Análise de desempenho e insights preditivos</p>
+                    <h2>Relatórios</h2>
+                    <p class="page-subtitle">Planilhas de controle e relatórios quadrimestrais</p>
+                </div>
+
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <div class="report-header">
+                            <h3>
+                                <i data-feather="file-text"></i>
+                                Relatórios de Ordens de Serviço
+                            </h3>
+                        </div>
+                        <div class="report-content">
+                            <div class="report-item" onclick="openSpreadsheet('construcao')">
+                                <i data-feather="tool"></i>
+                                <span>SAR03.01 - Construção</span>
+                                <small>34 OS ativas</small>
+                            </div>
+                            <div class="report-item" onclick="openSpreadsheet('manutencao')">
+                                <i data-feather="settings"></i>
+                                <span>SAR03.03 - Manutenção</span>
+                                <small>39 OS ativas</small>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="analytics-filters">
-                        <div class="filter-group">
-                            <div class="filter-label">Período</div>
-                            <div class="filter-options">
-                                <div class="filter-item active" onclick="filterByPeriod('month')">
-                                    <i data-feather="calendar"></i>
-                                    <span>Último mês</span>
-                                </div>
-                                <div class="filter-item" onclick="filterByPeriod('quarter')">
-                                    <i data-feather="calendar"></i>
-                                    <span>Último trimestre</span>
-                                </div>
-                                <div class="filter-item" onclick="filterByPeriod('year')">
-                                    <i data-feather="calendar"></i>
-                                    <span>Este ano</span>
-                                </div>
-                                <div class="filter-item custom" onclick="openDatePicker()">
-                                    <i data-feather="clock"></i>
-                                    <span>Personalizado</span>
-                                </div>
+
+                    <div class="report-card">
+                        <div class="report-header">
+                            <h3>
+                                <i data-feather="package"></i>
+                                Controle de Materiais
+                            </h3>
+                        </div>
+                        <div class="report-content">
+                            <div class="report-item" onclick="openSpreadsheet('almoxarifado')">
+                                <i data-feather="archive"></i>
+                                <span>Material do Almoxarifado</span>
+                                <small>Controle de estoque</small>
+                            </div>
+                            <div class="report-item" onclick="openSpreadsheet('fabrica')">
+                                <i data-feather="settings"></i>
+                                <span>Produção da Fábrica</span>
+                                <small>Pré-moldados</small>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="filter-group">
-                            <div class="filter-label">Solicitante</div>
-                            <div class="filter-options">
-                                <div class="filter-item" onclick="filterByRequester('education')">
-                                    <i data-feather="book"></i>
-                                    <span>Sec. Educação</span>
-                                    <span class="filter-count">45</span>
-                                </div>
-                                <div class="filter-item" onclick="filterByRequester('health')">
-                                    <i data-feather="heart"></i>
-                                    <span>Sec. Saúde</span>
-                                    <span class="filter-count">32</span>
-                                </div>
-                                <div class="filter-item" onclick="filterByRequester('culture')">
-                                    <i data-feather="music"></i>
-                                    <span>Sec. Cultura</span>
-                                    <span class="filter-count">18</span>
-                                </div>
-                                <div class="filter-item" onclick="filterByRequester('sports')">
-                                    <i data-feather="activity"></i>
-                                    <span>Sec. Esportes</span>
-                                    <span class="filter-count">12</span>
-                                </div>
-                            </div>
+                    <div class="report-card">
+                        <div class="report-header">
+                            <h3>
+                                <i data-feather="bar-chart"></i>
+                                Relatório Quadrimestral
+                            </h3>
                         </div>
-
-                        <div class="filter-group">
-                            <div class="filter-label">Tipo de Serviço</div>
-                            <div class="filter-options">
-                                <div class="filter-item" onclick="filterByService('construction')">
-                                    <i data-feather="tool"></i>
-                                    <span>Construção</span>
-                                    <span class="filter-count">85</span>
+                        <div class="report-content">
+                            <div class="quarter-stats">
+                                <div class="stat">
+                                    <span class="stat-label">OS Finalizadas</span>
+                                    <span class="stat-value">156</span>
                                 </div>
-                                <div class="filter-item" onclick="filterByService('maintenance')">
-                                    <i data-feather="settings"></i>
-                                    <span>Manutenção</span>
-                                    <span class="filter-count">156</span>
+                                <div class="stat">
+                                    <span class="stat-label">Material Consumido</span>
+                                    <span class="stat-value">R$ 185.000</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Produção Fábrica</span>
+                                    <span class="stat-value">2.340 peças</span>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="active-filters">
-                            <div class="active-filter">
-                                <span>Último mês</span>
-                                <i data-feather="x" onclick="removeFilter('period')"></i>
-                            </div>
-                            <div class="active-filter">
-                                <span>Sec. Educação</span>
-                                <i data-feather="x" onclick="removeFilter('requester')"></i>
-                            </div>
-                            <div class="active-filter">
-                                <span>Construção</span>
-                                <i data-feather="x" onclick="removeFilter('service')"></i>
-                            </div>
-                            <button class="clear-filters" onclick="clearAllFilters()">
-                                <i data-feather="trash-2"></i>
-                                Limpar Filtros
+                            <button class="btn btn-primary" onclick="generateQuarterlyReport()">
+                                <i data-feather="download"></i>
+                                Gerar Relatório
                             </button>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="analytics-grid">
-                    <div class="analytics-card">
-                        <div class="analytics-header">
-                            <h3 class="analytics-title">Tempo Médio de Atendimento</h3>
-                            <div class="sla-indicator sla-ok">
-                                <i data-feather="check-circle"></i>
-                                <span>Dentro do SLA</span>
-                            </div>
-                        </div>
-                        <div class="service-timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-content">
-                                    <div class="timeline-header">
-                                        <span class="timeline-title">SEI → OS</span>
-                                        <span class="timeline-date">0.5 dias</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-content">
-                                    <div class="timeline-header">
-                                        <span class="timeline-title">OS → Vistoria</span>
-                                        <span class="timeline-date">1.2 dias</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-content">
-                                    <div class="timeline-header">
-                                        <span class="timeline-title">Vistoria → Execução</span>
-                                        <span class="timeline-date">2.5 dias</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Almoxarifado Tab -->
+            <div id="almoxarifado" class="tab-content">
+                <div class="page-header">
+                    <h2>Material do Almoxarifado</h2>
+                    <p class="page-subtitle">Controle de estoque de materiais</p>
+                </div>
 
-                    <div class="analytics-card">
-                        <div class="analytics-header">
-                            <h3 class="analytics-title">Previsão de Materiais</h3>
-                        </div>
-                        <div class="material-forecast">
-                            <div class="forecast-item">
-                                <div class="forecast-header">
-                                    <span class="forecast-title">Cimento</span>
-                                    <span class="forecast-trend trend-up">+15%</span>
-                                </div>
-                                <p>Previsão: 120 sacos/mês</p>
-                            </div>
-                            <div class="forecast-item">
-                                <div class="forecast-header">
-                                    <span class="forecast-title">Telhas</span>
-                                    <span class="forecast-trend trend-up">+22%</span>
-                                </div>
-                                <p>Previsão: 450 un/mês</p>
-                            </div>
-                            <div class="forecast-item">
-                                <div class="forecast-header">
-                                    <span class="forecast-title">Tinta</span>
-                                    <span class="forecast-trend trend-down">-8%</span>
-                                </div>
-                                <p>Previsão: 35 latas/mês</p>
-                            </div>
-                        </div>
-                        <div class="material-alert">
+                <div class="warehouse-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
                             <i data-feather="alert-triangle"></i>
-                            <div class="material-alert-content">
-                                <div class="material-alert-title">Alerta de Estoque</div>
-                                <div class="material-alert-description">Cimento atingirá nível crítico em 5 dias</div>
-                            </div>
+                        </div>
+                        <div class="stat-content">
+                            <h3>8</h3>
+                            <p>Itens Baixo Estoque</p>
                         </div>
                     </div>
-
-                    <div class="analytics-card">
-                        <div class="analytics-header">
-                            <h3 class="analytics-title">Insights Preditivos</h3>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-feather="trending-up"></i>
                         </div>
-                        <div class="prediction-card">
-                            <div class="prediction-header">
-                                <i data-feather="trending-up"></i>
-                                <strong>Padrões Identificados</strong>
-                            </div>
-                            <div class="prediction-content">
-                                <p>Aumento de 25% em solicitações de reparo de telhado durante período de chuvas (Nov-Mar)</p>
-                                <p>Escolas apresentam maior demanda de serviços hidráulicos durante período letivo</p>
-                            </div>
+                        <div class="stat-content">
+                            <h3>125</h3>
+                            <p>Movimentações (Mês)</p>
                         </div>
-                        <div class="prediction-card">
-                            <div class="prediction-header">
-                                <i data-feather="clock"></i>
-                                <strong>Manutenção Preventiva Sugerida</strong>
-                            </div>
-                            <div class="prediction-content">
-                                <p>Programar vistoria de telhados em Outubro</p>
-                                <p>Verificar instalações hidráulicas das escolas em Janeiro</p>
-                            </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-feather="package"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>R$ 45.000</h3>
+                            <p>Total em Estoque</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="analytics-grid">
-                    <div class="analytics-card">
-                        <div class="analytics-header">
-                            <h3 class="analytics-title">Distribuição por Solicitante</h3>
+                <div class="warehouse-content">
+                    <div class="warehouse-header">
+                        <div class="search-bar">
+                            <input type="text" placeholder="Buscar material...">
+                            <button class="btn-icon">
+                                <i data-feather="search"></i>
+                            </button>
                         </div>
-                        <div class="chart-container">
-                            <!-- Placeholder para gráfico -->
-                            <div class="chart-item">
-                                <div class="chart-info">
-                                    <i data-feather="book"></i>
-                                    <span>Secretaria de Educação</span>
-                                    <strong>45%</strong>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 45%;"></div>
-                                </div>
-                            </div>
-                            <div class="chart-item">
-                                <div class="chart-info">
-                                    <i data-feather="heart"></i>
-                                    <span>Secretaria de Saúde</span>
-                                    <strong>30%</strong>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 30%;"></div>
-                                </div>
-                            </div>
-                        </div>
+                        <button class="btn btn-primary" onclick="openModal('material-entry-modal')">
+                            <i data-feather="plus"></i>
+                            Nova Movimentação
+                        </button>
                     </div>
 
-                    <div class="analytics-card">
-                        <div class="analytics-header">
-                            <h3 class="analytics-title">Eficiência Operacional</h3>
+                    <table class="warehouse-table">
+                        <thead>
+                            <tr>
+                                <th>Material</th>
+                                <th>Estoque Atual</th>
+                                <th>Unidade</th>
+                                <th>Status</th>
+                                <th>Última Movimentação</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="low-stock">
+                                <td>Cimento (saco 50kg)</td>
+                                <td>15</td>
+                                <td>UN</td>
+                                <td><span class="status-badge critical">Crítico</span></td>
+                                <td>24/05/2025</td>
+                                <td>
+                                    <button class="btn-icon" onclick="openMaterialDetail('cimento')">
+                                        <i data-feather="eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Areia (m³)</td>
+                                <td>45</td>
+                                <td>M³</td>
+                                <td><span class="status-badge normal">Normal</span></td>
+                                <td>23/05/2025</td>
+                                <td>
+                                    <button class="btn-icon" onclick="openMaterialDetail('areia')">
+                                        <i data-feather="eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="low-stock">
+                                <td>Tinta Branca (18L)</td>
+                                <td>8</td>
+                                <td>UN</td>
+                                <td><span class="status-badge warning">Baixo</span></td>
+                                <td>24/05/2025</td>
+                                <td>
+                                    <button class="btn-icon" onclick="openMaterialDetail('tinta')">
+                                        <i data-feather="eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Fábrica Tab -->
+            <div id="fabrica" class="tab-content">
+                <div class="page-header">
+                    <h2>Produção da Fábrica de Pré-moldados</h2>
+                    <p class="page-subtitle">Controle de produção de materiais</p>
+                </div>
+
+                <div class="production-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-feather="settings"></i>
                         </div>
-                        <div class="stats-container">
-                            <div class="stat-row">
-                                <div class="stat-label">Tempo médio de resposta</div>
-                                <div class="stat-value">1.2 dias</div>
-                                <div class="stat-trend positive">-15%</div>
-                            </div>
-                            <div class="stat-row">
-                                <div class="stat-label">Taxa de retrabalho</div>
-                                <div class="stat-value">3.5%</div>
-                                <div class="stat-trend positive">-2%</div>
-                            </div>
-                            <div class="stat-row">
-                                <div class="stat-label">Satisfação do solicitante</div>
-                                <div class="stat-value">4.8/5.0</div>
-                                <div class="stat-trend positive">+0.3</div>
-                            </div>
-                            <div class="stat-row">
-                                <div class="stat-label">Custo médio por OS</div>
-                                <div class="stat-value">R$ 1.250,00</div>
-                                <div class="stat-trend negative">+5%</div>
-                            </div>
-                            <div class="stat-row">
-                                <div class="stat-label">Tempo ocioso equipe</div>
-                                <div class="stat-value">8.5%</div>
-                                <div class="stat-trend positive">-4%</div>
-                            </div>
+                        <div class="stat-content">
+                            <h3>156</h3>
+                            <p>Peças Produzidas (Mês)</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-feather="clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>12</h3>
+                            <p>Dias de Produção</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-feather="trending-up"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>85%</h3>
+                            <p>Eficiência</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="report-actions">
-                    <button class="btn btn-highlight" onclick="downloadQuarterlyReport()">
-                        <i data-feather="file-text"></i>
-                        Baixar Relatório do Quadrimestre
-                    </button>
-                    <button class="btn btn-primary" onclick="generateReport()">
-                        <i data-feather="bar-chart-2"></i>
-                        Gerar Relatório Analítico
-                    </button>
-                    <button class="btn btn-secondary" onclick="exportData()">
-                        <i data-feather="download"></i>
-                        Exportar Dados CSV
-                    </button>
-                    <button class="btn btn-secondary" onclick="scheduleReport()">
-                        <i data-feather="clock"></i>
-                        Agendar Relatório
-                    </button>
-                    <button class="btn btn-secondary" onclick="shareReport()">
-                        <i data-feather="share-2"></i>
-                        Compartilhar
-                    </button>
+                <div class="production-content">
+                    <div class="production-header">
+                        <h3>Controle de Produção - Janeiro 2025</h3>
+                        <button class="btn btn-primary" onclick="openModal('production-entry-modal')">
+                            <i data-feather="plus"></i>
+                            Registrar Produção
+                        </button>
+                    </div>
+
+                    <div class="production-grid">
+                        <div class="production-item">
+                            <div class="production-info">
+                                <h4>Bloco de Concreto</h4>
+                                <span class="production-quantity">2.450 peças</span>
+                                <span class="production-date">Janeiro 2025</span>
+                            </div>
+                            <div class="production-materials">
+                                <span>Cimento: 85 sacos</span>
+                                <span>Areia: 15 m³</span>
+                                <span>Pedra: 12 m³</span>
+                            </div>
+                        </div>
+
+                        <div class="production-item">
+                            <div class="production-info">
+                                <h4>Laje Pré-moldada</h4>
+                                <span class="production-quantity">180 peças</span>
+                                <span class="production-date">Janeiro 2025</span>
+                            </div>
+                            <div class="production-materials">
+                                <span>Cimento: 45 sacos</span>
+                                <span>Ferro: 2.5 t</span>
+                                <span>Areia: 8 m³</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal for New OS -->
+    <!-- Modal for New OS from SEI -->
     <div id="nova-os-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -657,13 +660,13 @@
             <div class="modal-body">
                 <form id="nova-os-form" class="form-container">
                     <div class="form-section">
-                        <h3>Informações Básicas</h3>
+                        <h3>Informações da Solicitação SEI</h3>
                         <div class="form-group">
                             <label for="sei-number">
                                 <i data-feather="file"></i>
-                                Número do SEI (opcional)
+                                Número do SEI *
                             </label>
-                            <input type="text" id="sei-number" placeholder="Ex: 1129.2025/0000916-7">
+                            <input type="text" id="sei-number" placeholder="Ex: 1129.2025/0000916-7" required>
                         </div>
 
                         <div class="form-group">
@@ -698,7 +701,19 @@
                     </div>
 
                     <div class="form-section">
-                        <h3>Detalhes do Serviço</h3>
+                        <h3>Dados da Ordem de Serviço</h3>
+                        <div class="form-group">
+                            <label for="divisao">
+                                <i data-feather="users"></i>
+                                Divisão Responsável *
+                            </label>
+                            <select id="divisao" required>
+                                <option value="">Selecione...</option>
+                                <option value="SAR03.01">SAR03.01 - Construção</option>
+                                <option value="SAR03.03">SAR03.03 - Manutenção</option>
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <label for="tipo-servico">
                                 <i data-feather="tool"></i>
@@ -718,16 +733,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="urgencia">
-                                <i data-feather="alert-triangle"></i>
-                                Urgência *
+                            <label for="data-hora">
+                                <i data-feather="calendar"></i>
+                                Data e Hora da Abertura *
                             </label>
-                            <select id="urgencia" required>
-                                <option value="">Selecione...</option>
-                                <option value="urgente">Urgente (risco/segurança)</option>
-                                <option value="normal">Normal (até 15 dias)</option>
-                                <option value="baixa">Baixa (até 30 dias)</option>
-                            </select>
+                            <input type="datetime-local" id="data-hora" required>
                         </div>
 
                         <div class="form-group">
@@ -741,26 +751,17 @@
                         <div id="ai-suggestions" class="ai-suggestions" style="display: none;">
                             <div class="ai-header">
                                 <i data-feather="cpu"></i>
-                                <strong>Sugestões Inteligentes - Base de Conhecimento</strong>
+                                <strong>Sugestões da Base de Conhecimento</strong>
                             </div>
                             <div id="suggestions-content">
                                 <!-- Suggestions will be populated by JavaScript -->
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="fotos">
-                                <i data-feather="camera"></i>
-                                Fotos (opcional)
-                            </label>
-                            <input type="file" id="fotos" multiple accept="image/*">
-                            <small>Máximo 5 fotos, 10MB cada</small>
-                        </div>
-
                         <div class="form-actions">
                             <button type="button" class="btn btn-primary" onclick="createOS(event)">
                                 <i data-feather="check"></i>
-                                Criar Ordem de Serviço
+                                Abrir Ordem de Serviço
                             </button>
                         </div>
                     </div>
@@ -769,220 +770,100 @@
         </div>
     </div>
 
-    <!-- Modal for OS Details -->
-    <div id="os-detail" class="modal">
+    <!-- Modal for Vistoria (Technical Inspection) -->
+    <div id="vistoria-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>
-                    <i data-feather="file-text"></i>
-                    OS #2025-0852
+                    <i data-feather="eye"></i>
+                    Vistoria Técnica - OS #2025-0847
                 </h2>
-                <div class="sei-badge">
-                    SEI: 1129.2025/0000916-7
-                </div>
-                <button class="modal-close" onclick="closeModal('os-detail')">
+                <button class="modal-close" onclick="closeModal('vistoria-modal')">
                     <i data-feather="x"></i>
                 </button>
             </div>
             
             <div class="modal-body">
-                <div class="workflow-status">
-                    <div class="status-step completed">
-                        <i data-feather="file-text"></i>
-                        <span>Solicitação SEI</span>
-                        <small>24/05/2025 09:15</small>
-                    </div>
-                    <div class="status-step completed">
-                        <i data-feather="edit-3"></i>
-                        <span>OS Aberta</span>
-                        <small>24/05/2025 10:30</small>
-                    </div>
-                    <div class="status-step current">
-                        <i data-feather="search"></i>
-                        <span>Aguardando Vistoria</span>
-                        <small>Agendada: 25/05/2025</small>
-                    </div>
-                    <div class="status-step">
-                        <i data-feather="tool"></i>
-                        <span>Em Execução</span>
-                    </div>
-                    <div class="status-step">
-                        <i data-feather="check-circle"></i>
-                        <span>Concluído</span>
-                    </div>
-                </div>
-
-                <div class="detail-grid">
-                    <div class="detail-item">
-                        <i data-feather="map-pin"></i>
-                        <div>
-                            <strong>Local</strong>
-                            <span>Escola Municipal Vila Galvão</span>
+                <div class="vistoria-info">
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <i data-feather="file"></i>
+                            <div>
+                                <strong>SEI</strong>
+                                <span>1129.2025/0000914-2</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="detail-item">
-                        <i data-feather="user"></i>
-                        <div>
-                            <strong>Solicitante</strong>
-                            <span>Maria Santos - Diretora</span>
-                            <small>Tel: (11) 2468-1357</small>
+                        <div class="detail-item">
+                            <i data-feather="map-pin"></i>
+                            <div>
+                                <strong>Local</strong>
+                                <span>CEU Continental</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="detail-item">
-                        <i data-feather="calendar"></i>
-                        <div>
-                            <strong>Data Solicitação</strong>
-                            <span>24/05/2025</span>
+                        <div class="detail-item">
+                            <i data-feather="user"></i>
+                            <div>
+                                <strong>Solicitante</strong>
+                                <span>Ana Costa - Diretora CEU</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="detail-item">
-                        <i data-feather="tool"></i>
-                        <div>
-                            <strong>Tipo</strong>
-                            <span>Manutenção - Telhado</span>
-                        </div>
-                    </div>
-                    <div class="detail-item">
-                        <i data-feather="users"></i>
-                        <div>
-                            <strong>Divisão Responsável</strong>
-                            <span>SAR03.03 - Manutenção</span>
+                        <div class="detail-item">
+                            <i data-feather="tool"></i>
+                            <div>
+                                <strong>Tipo</strong>
+                                <span>Vazamento hidráulico</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="description-section">
-                    <h3>
-                        <i data-feather="align-left"></i>
-                        Descrição da Solicitação (SEI)
-                    </h3>
-                    <div class="description-content">
-                        <p>Solicito manutenção urgente do telhado da Escola Municipal Vila Galvão. Foram identificadas goteiras em diversas salas de aula, principalmente nas salas 3, 4 e no corredor principal. O problema se agrava durante chuvas intensas, prejudicando as atividades escolares.</p>
-                        <p>Algumas telhas aparentam estar quebradas ou deslocadas, necessitando substituição. A infiltração já está causando manchas no forro e paredes.</p>
-                    </div>
-                </div>
-
-                <div class="photos-section">
-                    <h3>
-                        <i data-feather="camera"></i>
-                        Fotos Anexadas
-                    </h3>
-                    <div class="photos-grid">
-                        <div class="photo-item">
-                            <img src="placeholder.jpg" alt="Goteira sala 3">
-                            <span>Goteira - Sala 3</span>
-                            <small>Anexado via SEI</small>
-                        </div>
-                        <div class="photo-item">
-                            <img src="placeholder.jpg" alt="Telhas quebradas">
-                            <span>Telhas Quebradas</span>
-                            <small>Anexado via SEI</small>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="inspection-section">
-                    <h3>
-                        <i data-feather="clipboard"></i>
-                        Vistoria Técnica
-                    </h3>
-                    <div class="inspection-form">
+                <form class="vistoria-form">
+                    <div class="form-section">
+                        <h3>Resultado da Vistoria</h3>
                         <div class="form-group">
-                            <label>Data Agendada</label>
-                            <input type="date" value="2025-05-25">
+                            <label for="custo-previo">
+                                <i data-feather="dollar-sign"></i>
+                                Custo Prévio *
+                            </label>
+                            <input type="number" id="custo-previo" placeholder="0,00" step="0.01" required>
                         </div>
+
                         <div class="form-group">
-                            <label>Técnico Responsável</label>
-                            <select>
-                                <option>Carlos Silva - Técnico SAR03.03</option>
-                                <option>João Oliveira - Técnico SAR03.03</option>
+                            <label for="urgencia-vistoria">
+                                <i data-feather="alert-triangle"></i>
+                                Classificação *
+                            </label>
+                            <select id="urgencia-vistoria" required>
+                                <option value="">Selecione...</option>
+                                <option value="urgente">Urgente (risco/segurança)</option>
+                                <option value="fila">Fila de espera</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Observações para Vistoria</label>
-                            <textarea placeholder="Instruções ou observações para o técnico..."></textarea>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="ai-suggestions">
-                    <div class="ai-header">
-                        <i data-feather="cpu"></i>
-                        <strong>Sugestões da Base de Conhecimento</strong>
-                    </div>
-                    <div class="suggestion-item">
-                        <div class="suggestion-header">
-                            <i data-feather="lightbulb"></i>
-                            <strong>Casos Similares</strong>
+                        <div class="form-group">
+                            <label for="observacoes-vistoria">
+                                <i data-feather="edit-3"></i>
+                                Observações da Vistoria
+                            </label>
+                            <textarea id="observacoes-vistoria" rows="3" placeholder="Observações técnicas..."></textarea>
                         </div>
-                        <div class="suggestion-content">
-                            <div class="similar-case">
-                                <span class="case-number">OS #2024-1247</span>
-                                <p>Reparo de telhado na EMEI Jardim Adriana (Nov/2024)</p>
-                                <div class="case-details">
-                                    <span><strong>Materiais:</strong> Telhas (50), Argamassa (8)</span>
-                                    <span><strong>Tempo:</strong> 3 dias</span>
-                                    <span><strong>Equipe:</strong> SAR03.03-A</span>
-                                </div>
-                            </div>
-                            <div class="similar-case">
-                                <span class="case-number">OS #2024-0985</span>
-                                <p>Manutenção telhado UBS Centro (Set/2024)</p>
-                                <div class="case-details">
-                                    <span><strong>Materiais:</strong> Telhas (35), Impermeabilizante (2)</span>
-                                    <span><strong>Tempo:</strong> 2 dias</span>
-                                    <span><strong>Equipe:</strong> SAR03.03-B</span>
-                                </div>
-                            </div>
+
+                        <div class="form-group">
+                            <label for="materiais-necessarios">
+                                <i data-feather="package"></i>
+                                Materiais Necessários
+                            </label>
+                            <textarea id="materiais-necessarios" rows="3" placeholder="Liste os materiais necessários..."></textarea>
                         </div>
-                    </div>
-                    <div class="suggestion-item">
-                        <div class="suggestion-header">
-                            <i data-feather="package"></i>
-                            <strong>Materiais Sugeridos</strong>
-                        </div>
-                        <div class="suggestion-content">
-                            <div class="material-suggestion">
-                                <div class="material-item">
-                                    <span>Telhas cerâmicas</span>
-                                    <span>45-60 unidades</span>
-                                    <div class="stock-status available">Em estoque</div>
-                                </div>
-                                <div class="material-item">
-                                    <span>Argamassa</span>
-                                    <span>6-10 sacos</span>
-                                    <div class="stock-status warning">Estoque baixo</div>
-                                </div>
-                                <div class="material-item">
-                                    <span>Impermeabilizante</span>
-                                    <span>2 latas 18L</span>
-                                    <div class="stock-status critical">Indisponível</div>
-                                </div>
-                            </div>
-                            <button class="btn btn-secondary" onclick="reserveMaterials()">
-                                <i data-feather="shopping-cart"></i>
-                                Reservar Materiais
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary" onclick="finishVistoria()">
+                                <i data-feather="check"></i>
+                                Finalizar Vistoria
                             </button>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <div class="action-buttons">
-                    <button class="btn btn-primary" onclick="scheduleInspection()">
-                        <i data-feather="calendar"></i>
-                        Confirmar Vistoria
-                    </button>
-                    <button class="btn btn-secondary" onclick="requestMoreInfo()">
-                        <i data-feather="help-circle"></i>
-                        Solicitar Informações
-                    </button>
-                    <button class="btn btn-secondary" onclick="printOS()">
-                        <i data-feather="printer"></i>
-                        Imprimir OS
-                    </button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -993,7 +874,7 @@
             <div class="modal-header">
                 <h2>
                     <i data-feather="clipboard"></i>
-                    Relatório Diário de Serviço
+                    Relatório Diário de Serviço - OS #2025-0835
                 </h2>
                 <button class="modal-close" onclick="closeModal('daily-report-modal')">
                     <i data-feather="x"></i>
@@ -1001,79 +882,100 @@
             </div>
             
             <div class="modal-body">
-                <form id="daily-report-form" class="form-container">
+                <div class="report-info">
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <i data-feather="file"></i>
+                            <div>
+                                <strong>SEI</strong>
+                                <span>1129.2025/0000905-8</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i data-feather="calendar"></i>
+                            <div>
+                                <strong>Data</strong>
+                                <span>24/05/2025</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i data-feather="map-pin"></i>
+                            <div>
+                                <strong>Local</strong>
+                                <span>Escola Municipal Centro</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i data-feather="users"></i>
+                            <div>
+                                <strong>Divisão</strong>
+                                <span>SAR03.01 - Construção</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="daily-report-form">
                     <div class="form-section">
-                        <div class="form-header">
-                            <div class="sei-reference">
-                                SEI: 1129.2025/0000905-8
-                                <span class="os-reference">OS #2025-0835</span>
-                            </div>
-                            <div class="report-date">
-                                <i data-feather="calendar"></i>
-                                Data: 24/05/2025
-                            </div>
-                        </div>
-
+                        <h3>Atividades do Dia</h3>
                         <div class="form-group">
-                            <label>
+                            <label for="atividades-realizadas">
                                 <i data-feather="check-square"></i>
-                                Atividades Realizadas
+                                Atividades Realizadas *
                             </label>
-                            <textarea rows="4" placeholder="Descreva as atividades realizadas hoje..." required></textarea>
+                            <textarea id="atividades-realizadas" rows="4" placeholder="Descreva as atividades realizadas hoje..." required></textarea>
                         </div>
 
                         <div class="form-group">
-                            <label>
+                            <label for="equipe-trabalho">
                                 <i data-feather="users"></i>
                                 Equipe de Trabalho
                             </label>
-                            <div class="team-members">
+                            <div class="team-selection">
                                 <div class="team-member">
-                                    <input type="checkbox" checked>
-                                    <span>João Silva - Pedreiro</span>
+                                    <input type="checkbox" id="joao-silva" checked>
+                                    <label for="joao-silva">João Silva - Pedreiro</label>
                                 </div>
                                 <div class="team-member">
-                                    <input type="checkbox" checked>
-                                    <span>Pedro Santos - Ajudante</span>
+                                    <input type="checkbox" id="pedro-santos" checked>
+                                    <label for="pedro-santos">Pedro Santos - Ajudante</label>
                                 </div>
                                 <div class="team-member">
-                                    <input type="checkbox">
-                                    <span>Carlos Oliveira - Eletricista</span>
+                                    <input type="checkbox" id="carlos-oliveira">
+                                    <label for="carlos-oliveira">Carlos Oliveira - Eletricista</label>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label>
+                            <label for="materiais-utilizados">
                                 <i data-feather="package"></i>
                                 Materiais Utilizados
                             </label>
-                            <div class="materials-used">
+                            <div class="materials-section">
                                 <div class="material-entry">
-                                    <select>
+                                    <select class="material-select">
                                         <option value="">Selecionar material...</option>
                                         <option value="cimento">Cimento (saco 50kg)</option>
                                         <option value="areia">Areia (m³)</option>
                                         <option value="tijolo">Tijolo (milheiro)</option>
                                         <option value="tinta">Tinta (lata 18L)</option>
                                     </select>
-                                    <input type="number" placeholder="Quantidade">
-                                    <button type="button" class="btn-icon">
+                                    <input type="number" placeholder="Quantidade" class="material-quantity">
+                                    <button type="button" class="btn-add-material" onclick="addMaterial()">
                                         <i data-feather="plus"></i>
                                     </button>
                                 </div>
-                                <div class="material-list">
+                                <div class="materials-list">
                                     <div class="material-item">
-                                        <span>Cimento (saco 50kg)</span>
-                                        <span>10 unidades</span>
-                                        <button class="btn-icon">
+                                        <span>Cimento (saco 50kg) - 10 unidades</span>
+                                        <button type="button" onclick="removeMaterial(this)">
                                             <i data-feather="trash-2"></i>
                                         </button>
                                     </div>
                                     <div class="material-item">
-                                        <span>Areia (m³)</span>
-                                        <span>2 unidades</span>
-                                        <button class="btn-icon">
+                                        <span>Areia (m³) - 2 unidades</span>
+                                        <button type="button" onclick="removeMaterial(this)">
                                             <i data-feather="trash-2"></i>
                                         </button>
                                     </div>
@@ -1082,177 +984,301 @@
                         </div>
 
                         <div class="form-group">
-                            <label>
-                                <i data-feather="camera"></i>
-                                Fotos do Progresso
-                            </label>
-                            <input type="file" multiple accept="image/*">
-                            <div class="photo-preview">
-                                <div class="photo-item">
-                                    <img src="placeholder.jpg" alt="Progresso 1">
-                                    <button class="btn-icon">
-                                        <i data-feather="trash-2"></i>
-                                    </button>
-                                </div>
-                                <div class="photo-item">
-                                    <img src="placeholder.jpg" alt="Progresso 2">
-                                    <button class="btn-icon">
-                                        <i data-feather="trash-2"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>
-                                <i data-feather="alert-circle"></i>
-                                Observações/Problemas Encontrados
-                            </label>
-                            <textarea rows="3" placeholder="Registre aqui qualquer observação ou problema encontrado..."></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label>
+                            <label for="progresso-estimado">
                                 <i data-feather="trending-up"></i>
                                 Progresso Estimado
                             </label>
                             <div class="progress-input">
-                                <input type="range" min="0" max="100" value="60">
-                                <span>60%</span>
+                                <input type="range" id="progresso-range" min="0" max="100" value="60" oninput="updateProgress(this.value)">
+                                <span id="progress-value">60%</span>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">
-                            <i data-feather="save"></i>
-                            Salvar Relatório
-                        </button>
-                        <button type="button" class="btn btn-secondary" onclick="previewReport()">
-                            <i data-feather="printer"></i>
-                            Visualizar/Imprimir
-                        </button>
+                        <div class="form-group">
+                            <label for="observacoes-dia">
+                                <i data-feather="alert-circle"></i>
+                                Observações/Problemas
+                            </label>
+                            <textarea id="observacoes-dia" rows="3" placeholder="Registre observações ou problemas encontrados..."></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary" onclick="saveDailyReport()">
+                                <i data-feather="save"></i>
+                                Salvar Relatório
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal for Material Warehouse -->
-    <div id="warehouse-modal" class="modal">
+    <!-- Modal for OS Closing -->
+    <div id="closing-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>
-                    <i data-feather="package"></i>
-                    Controle de Almoxarifado
+                    <i data-feather="check-circle"></i>
+                    Fechamento de OS - #2025-0830
                 </h2>
-                <button class="modal-close" onclick="closeModal('warehouse-modal')">
+                <button class="modal-close" onclick="closeModal('closing-modal')">
                     <i data-feather="x"></i>
                 </button>
             </div>
             
             <div class="modal-body">
-                <div class="warehouse-stats">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i data-feather="alert-triangle"></i>
+                <div class="closing-info">
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <i data-feather="file"></i>
+                            <div>
+                                <strong>SEI</strong>
+                                <span>1129.2025/0000901-3</span>
+                            </div>
                         </div>
-                        <div class="stat-content">
-                            <h3>8</h3>
-                            <p>Itens Baixo Estoque</p>
+                        <div class="detail-item">
+                            <i data-feather="calendar"></i>
+                            <div>
+                                <strong>Concluído em</strong>
+                                <span>23/05/2025</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i data-feather="trending-up"></i>
+                        <div class="detail-item">
+                            <i data-feather="dollar-sign"></i>
+                            <div>
+                                <strong>Custo Final</strong>
+                                <span>R$ 3.200,00</span>
+                            </div>
                         </div>
-                        <div class="stat-content">
-                            <h3>125</h3>
-                            <p>Movimentações (Mês)</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i data-feather="shopping-cart"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3>12</h3>
-                            <p>Pedidos Pendentes</p>
+                        <div class="detail-item">
+                            <i data-feather="users"></i>
+                            <div>
+                                <strong>Divisão</strong>
+                                <span>SAR03.03 - Manutenção</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="warehouse-content">
-                    <div class="search-bar">
-                        <input type="text" placeholder="Buscar material...">
-                        <button class="btn-icon">
-                            <i data-feather="search"></i>
-                        </button>
+                <div class="closing-section">
+                    <h3>Relatório Final de Materiais</h3>
+                    <div class="materials-summary">
+                        <div class="material-used">
+                            <span>Portas de madeira - 3 unidades</span>
+                            <span>R$ 1.800,00</span>
+                        </div>
+                        <div class="material-used">
+                            <span>Dobradiças - 6 unidades</span>
+                            <span>R$ 180,00</span>
+                        </div>
+                        <div class="material-used">
+                            <span>Fechaduras - 3 unidades</span>
+                            <span>R$ 450,00</span>
+                        </div>
+                        <div class="material-used">
+                            <span>Mão de obra (3 dias)</span>
+                            <span>R$ 770,00</span>
+                        </div>
+                        <div class="material-total">
+                            <strong>Total: R$ 3.200,00</strong>
+                        </div>
                     </div>
+                </div>
 
-                    <table class="warehouse-table">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Material</th>
-                                <th>Estoque Atual</th>
-                                <th>Mínimo</th>
-                                <th>Status</th>
-                                <th>Última Movimentação</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="low-stock">
-                                <td>MAT001</td>
-                                <td>Cimento (saco 50kg)</td>
-                                <td>15</td>
-                                <td>50</td>
-                                <td>
-                                    <span class="status-badge critical">Crítico</span>
-                                </td>
-                                <td>24/05/2025</td>
-                            </tr>
-                            <tr>
-                                <td>MAT002</td>
-                                <td>Areia (m³)</td>
-                                <td>45</td>
-                                <td>20</td>
-                                <td>
-                                    <span class="status-badge normal">Normal</span>
-                                </td>
-                                <td>23/05/2025</td>
-                            </tr>
-                            <tr class="low-stock">
-                                <td>MAT003</td>
-                                <td>Tinta Branca (18L)</td>
-                                <td>8</td>
-                                <td>15</td>
-                                <td>
-                                    <span class="status-badge warning">Baixo</span>
-                                </td>
-                                <td>24/05/2025</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="warehouse-actions">
-                        <button class="btn btn-primary" onclick="openNewOrderModal()">
-                            <i data-feather="plus"></i>
-                            Novo Pedido
-                        </button>
-                        <button class="btn btn-secondary" onclick="exportInventory()">
-                            <i data-feather="download"></i>
-                            Exportar Inventário
-                        </button>
+                <div class="closing-section">
+                    <h3>Fotos do Trabalho Concluído</h3>
+                    <div class="photos-grid">
+                        <div class="photo-item">
+                            <div class="photo-placeholder">
+                                <i data-feather="image"></i>
+                                <span>Antes</span>
+                            </div>
+                        </div>
+                        <div class="photo-item">
+                            <div class="photo-placeholder">
+                                <i data-feather="image"></i>
+                                <span>Depois</span>
+                            </div>
+                        </div>
                     </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-primary" onclick="sendToSEI()">
+                        <i data-feather="send"></i>
+                        Enviar para SEI
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="generateMaterialReport()">
+                        <i data-feather="file-text"></i>
+                        Gerar Relatório de Materiais
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Modal for Material Entry -->
+    <div id="material-entry-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>
+                    <i data-feather="package"></i>
+                    Nova Movimentação - Almoxarifado
+                </h2>
+                <button class="modal-close" onclick="closeModal('material-entry-modal')">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <form class="material-form">
+                    <div class="form-section">
+                        <div class="form-group">
+                            <label for="movimento-tipo">
+                                <i data-feather="arrow-right"></i>
+                                Tipo de Movimento *
+                            </label>
+                            <select id="movimento-tipo" required>
+                                <option value="">Selecione...</option>
+                                <option value="entrada">Entrada</option>
+                                <option value="saida">Saída</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="material-nome">
+                                <i data-feather="package"></i>
+                                Material *
+                            </label>
+                            <input type="text" id="material-nome" placeholder="Nome do material" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantidade-movimento">
+                                <i data-feather="hash"></i>
+                                Quantidade *
+                            </label>
+                            <input type="number" id="quantidade-movimento" placeholder="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="destino-origem">
+                                <i data-feather="map-pin"></i>
+                                Destino/Origem
+                            </label>
+                            <input type="text" id="destino-origem" placeholder="Para onde vai / De onde vem">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary" onclick="saveMaterialMovement()">
+                                <i data-feather="save"></i>
+                                Registrar Movimento
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <!-- Just load our script -->
+    <!-- Modal for Production Entry -->
+    <div id="production-entry-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>
+                    <i data-feather="settings"></i>
+                    Registrar Produção - Fábrica
+                </h2>
+                <button class="modal-close" onclick="closeModal('production-entry-modal')">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <form class="production-form">
+                    <div class="form-section">
+                        <div class="form-group">
+                            <label for="produto-tipo">
+                                <i data-feather="box"></i>
+                                Tipo de Produto *
+                            </label>
+                            <select id="produto-tipo" required>
+                                <option value="">Selecione...</option>
+                                <option value="bloco">Bloco de Concreto</option>
+                                <option value="laje">Laje Pré-moldada</option>
+                                <option value="viga">Viga Pré-moldada</option>
+                                <option value="tubo">Tubo de Concreto</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantidade-produzida">
+                                <i data-feather="hash"></i>
+                                Quantidade Produzida *
+                            </label>
+                            <input type="number" id="quantidade-produzida" placeholder="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="data-producao">
+                                <i data-feather="calendar"></i>
+                                Data da Produção *
+                            </label>
+                            <input type="date" id="data-producao" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="materiais-utilizados-producao">
+                                <i data-feather="package"></i>
+                                Materiais Utilizados
+                            </label>
+                            <textarea id="materiais-utilizados-producao" rows="3" placeholder="Ex: Cimento: 45 sacos, Areia: 8 m³..."></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary" onclick="saveProduction()">
+                                <i data-feather="save"></i>
+                                Registrar Produção
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Spreadsheet Viewer -->
+    <div id="spreadsheet-modal" class="modal">
+        <div class="modal-content" style="max-width: 90%; max-height: 90%;">
+            <div class="modal-header">
+                <h2>
+                    <i data-feather="file-text"></i>
+                    <span id="spreadsheet-title">Planilha</span>
+                </h2>
+                <div class="spreadsheet-actions">
+                    <button class="btn btn-secondary" onclick="exportSpreadsheet()">
+                        <i data-feather="download"></i>
+                        Exportar XLS
+                    </button>
+                    <button class="btn btn-secondary" onclick="printSpreadsheet()">
+                        <i data-feather="printer"></i>
+                        Imprimir
+                    </button>
+                </div>
+                <button class="modal-close" onclick="closeModal('spreadsheet-modal')">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body" style="padding: 0;">
+                <div id="spreadsheet-content" class="spreadsheet-viewer">
+                    <!-- Spreadsheet content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
