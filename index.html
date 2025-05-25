@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BPP - Board de Gestão de Próprios Públicos</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
     <div class="header">
@@ -62,7 +63,7 @@
             <div id="dashboard" class="tab-content active">
                 <div class="page-header">
                     <h2>Dashboard</h2>
-                    <p class="page-subtitle">Visão geral das ordens de serviço</p>
+                    <p class="page-subtitle">Visão geral das ordens de serviço e análises preditivas</p>
                 </div>
                 
                 <div class="stats-grid">
@@ -71,7 +72,7 @@
                             <i data-feather="file-text"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>47</h3>
+                            <h3 id="os-abertas-count">47</h3>
                             <p>OS Abertas</p>
                         </div>
                     </div>
@@ -80,7 +81,7 @@
                             <i data-feather="eye"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>12</h3>
+                            <h3 id="vistoria-count">12</h3>
                             <p>Aguardando Vistoria</p>
                         </div>
                     </div>
@@ -89,7 +90,7 @@
                             <i data-feather="play-circle"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>23</h3>
+                            <h3 id="execucao-count">23</h3>
                             <p>Em Execução</p>
                         </div>
                     </div>
@@ -98,71 +99,276 @@
                             <i data-feather="check-circle"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>156</h3>
+                            <h3 id="concluidas-count">156</h3>
                             <p>Finalizadas (Mês)</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="dashboard-grid">
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <h3>
-                                <i data-feather="pie-chart"></i>
-                                OS por Divisão
-                            </h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="chart-item">
-                                <div class="chart-info">
-                                    <i data-feather="tool"></i>
-                                    <span>SAR03.01 (Construção)</span>
-                                    <strong>34 OS</strong>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 68%;"></div>
+                <!-- Analytics Section -->
+                <div class="analytics-section">
+                    <!-- Chart Row 1 -->
+                    <div class="chart-row">
+                        <div class="chart-container evolution">
+                            <div class="chart-header">
+                                <h3>
+                                    <i data-feather="activity"></i>
+                                    Evolução de OS por Status
+                                </h3>
+                                <div class="chart-actions">
+                                    <button class="btn-icon" onclick="refreshChart('osEvolution')">
+                                        <i data-feather="refresh-cw"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="chart-item">
-                                <div class="chart-info">
-                                    <i data-feather="settings"></i>
-                                    <span>SAR03.03 (Manutenção)</span>
-                                    <strong>39 OS</strong>
+                            <div class="chart-content">
+                                <canvas id="osEvolutionChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>
+                                    <i data-feather="pie-chart"></i>
+                                    Distribuição por Tipo de Serviço
+                                </h3>
+                                <div class="chart-actions">
+                                    <button class="btn-icon" onclick="refreshChart('serviceType')">
+                                        <i data-feather="refresh-cw"></i>
+                                    </button>
                                 </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 78%;"></div>
+                            </div>
+                            <div class="chart-content">
+                                <canvas id="serviceTypeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart Row 2 -->
+                    <div class="chart-row">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>
+                                    <i data-feather="dollar-sign"></i>
+                                    Análise de Custos por Divisão
+                                </h3>
+                            </div>
+                            <div class="chart-content">
+                                <canvas id="costAnalysisChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>
+                                    <i data-feather="clock"></i>
+                                    Tempo Médio de Resolução
+                                </h3>
+                            </div>
+                            <div class="chart-content">
+                                <canvas id="resolutionTimeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Insights Section -->
+                    <div class="insights-section">
+                        <h3 class="section-title">
+                            <i data-feather="cpu"></i>
+                            Insights e Previsões Inteligentes
+                        </h3>
+                        
+                        <div class="insights-grid">
+                            <div class="insight-card" data-type="alert">
+                                <div class="insight-icon">
+                                    <i data-feather="alert-triangle"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Alerta de Estoque</h4>
+                                    <p>Cimento e tinta com estoque crítico. Consumo previsto para próxima semana: 85 sacos de cimento.</p>
+                                    <div class="insight-action">
+                                        <button class="btn btn-secondary" onclick="showTab('almoxarifado')">
+                                            Ver Detalhes
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="insight-card" data-type="prediction">
+                                <div class="insight-icon">
+                                    <i data-feather="trending-up"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Previsão de Demanda</h4>
+                                    <p>Aumento de 35% em OS de manutenção elétrica esperado para junho (período de chuvas).</p>
+                                    <div class="insight-metrics">
+                                        <span class="metric">
+                                            <strong>28</strong> OS previstas
+                                        </span>
+                                        <span class="metric">
+                                            <strong>R$ 45.000</strong> orçamento estimado
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="insight-card" data-type="efficiency">
+                                <div class="insight-icon">
+                                    <i data-feather="award"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Eficiência Operacional</h4>
+                                    <p>Divisão SAR03.03 com melhor desempenho: 92% das OS finalizadas no prazo.</p>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 92%; background: linear-gradient(90deg, #34c759, #30d158);"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="insight-card" data-type="cost">
+                                <div class="insight-icon">
+                                    <i data-feather="dollar-sign"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Otimização de Custos</h4>
+                                    <p>Economia potencial de R$ 12.000/mês agrupando OS similares no mesmo local.</p>
+                                    <div class="insight-action">
+                                        <button class="btn btn-secondary" onclick="showOptimizationModal()">
+                                            Ver Sugestões
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <h3>
-                                <i data-feather="clock"></i>
-                                Tempo Médio por Divisão
-                            </h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="time-item">
-                                <div class="time-info">
-                                    <i data-feather="users"></i>
-                                    <strong>SAR03.01 (Construção)</strong>
-                                    <span>Tempo médio: 6.8 dias</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 68%;"></div>
+                    <!-- Material Consumption Chart -->
+                    <div class="chart-full-width">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>
+                                    <i data-feather="package"></i>
+                                    Consumo de Materiais - Últimos 6 Meses
+                                </h3>
+                                <div class="chart-actions">
+                                    <select class="chart-filter" onchange="updateMaterialChart(this.value)">
+                                        <option value="all">Todos os Materiais</option>
+                                        <option value="cimento">Cimento</option>
+                                        <option value="areia">Areia</option>
+                                        <option value="tinta">Tinta</option>
+                                        <option value="tijolo">Tijolo</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="time-item">
-                                <div class="time-info">
-                                    <i data-feather="users"></i>
-                                    <strong>SAR03.03 (Manutenção)</strong>
-                                    <span>Tempo médio: 3.2 dias</span>
+                            <div class="chart-content">
+                                <canvas id="materialConsumptionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Predictive Model Section -->
+                    <div class="predictive-section">
+                        <h3 class="section-title">
+                            <i data-feather="zap"></i>
+                            Modelo Preditivo de Manutenção
+                        </h3>
+                        
+                        <div class="prediction-grid">
+                            <div class="prediction-card">
+                                <div class="prediction-header">
+                                    <h4>Escolas Municipais</h4>
+                                    <span class="risk-badge high">Alto Risco</span>
                                 </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 32%;"></div>
+                                <div class="prediction-content">
+                                    <p>EMEF Nova Era - Probabilidade de problemas elétricos: <strong>78%</strong></p>
+                                    <div class="risk-bar">
+                                        <div class="risk-fill" style="width: 78%; background: #ff3b30;"></div>
+                                    </div>
+                                    <small>Baseado em: idade da instalação, histórico de OS, época do ano</small>
                                 </div>
+                            </div>
+
+                            <div class="prediction-card">
+                                <div class="prediction-header">
+                                    <h4>Unidades de Saúde</h4>
+                                    <span class="risk-badge medium">Médio Risco</span>
+                                </div>
+                                <div class="prediction-content">
+                                    <p>UBS Centro - Probabilidade de problemas hidráulicos: <strong>45%</strong></p>
+                                    <div class="risk-bar">
+                                        <div class="risk-fill" style="width: 45%; background: #ff9500;"></div>
+                                    </div>
+                                    <small>Baseado em: consumo de água, última manutenção, pressão da rede</small>
+                                </div>
+                            </div>
+
+                            <div class="prediction-card">
+                                <div class="prediction-header">
+                                    <h4>CEUs</h4>
+                                    <span class="risk-badge low">Baixo Risco</span>
+                                </div>
+                                <div class="prediction-content">
+                                    <p>CEU Continental - Probabilidade de problemas estruturais: <strong>15%</strong></p>
+                                    <div class="risk-bar">
+                                        <div class="risk-fill" style="width: 15%; background: #34c759;"></div>
+                                    </div>
+                                    <small>Baseado em: idade do prédio, qualidade da construção, manutenções preventivas</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report Generation Section -->
+                    <div class="report-generation">
+                        <div class="report-header">
+                            <h3>
+                                <i data-feather="file-text"></i>
+                                Geração de Relatórios
+                            </h3>
+                            <p>Exporte análises detalhadas para tomada de decisão</p>
+                        </div>
+                        
+                        <div class="report-options">
+                            <div class="report-option">
+                                <label for="report-period">
+                                    <i data-feather="calendar"></i>
+                                    Período
+                                </label>
+                                <select id="report-period">
+                                    <option value="week">Última Semana</option>
+                                    <option value="month" selected>Último Mês</option>
+                                    <option value="quarter">Último Trimestre</option>
+                                    <option value="year">Último Ano</option>
+                                    <option value="custom">Personalizado</option>
+                                </select>
+                            </div>
+
+                            <div class="report-option">
+                                <label for="report-type">
+                                    <i data-feather="layers"></i>
+                                    Tipo de Relatório
+                                </label>
+                                <select id="report-type">
+                                    <option value="executive">Executivo</option>
+                                    <option value="operational">Operacional</option>
+                                    <option value="financial">Financeiro</option>
+                                    <option value="predictive">Análise Preditiva</option>
+                                </select>
+                            </div>
+
+                            <div class="report-actions">
+                                <button class="btn btn-primary" onclick="generateDashboardReport()">
+                                    <i data-feather="download"></i>
+                                    Gerar PDF
+                                </button>
+                                <button class="btn btn-secondary" onclick="printDashboard()">
+                                    <i data-feather="printer"></i>
+                                    Imprimir
+                                </button>
+                                <button class="btn btn-secondary" onclick="exportDashboardData()">
+                                    <i data-feather="database"></i>
+                                    Exportar Dados
+                                </button>
                             </div>
                         </div>
                     </div>

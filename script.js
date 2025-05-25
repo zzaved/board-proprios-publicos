@@ -1272,3 +1272,211 @@ function getOSDataByNumber(osNumber, seiNumber) {
     }
     return null;
 }
+
+// Chart.js Dashboard Analytics
+let osEvolutionChart, serviceTypeChart, costAnalysisChart, resolutionTimeChart, materialConsumptionChart;
+let materialConsumptionData = {
+    all: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+            { label: 'Cimento', data: [120, 140, 110, 160, 180, 150], borderColor: '#007aff', backgroundColor: 'rgba(0,122,255,0.1)', tension: 0.4 },
+            { label: 'Areia', data: [80, 90, 70, 100, 120, 110], borderColor: '#ff9500', backgroundColor: 'rgba(255,149,0,0.1)', tension: 0.4 },
+            { label: 'Tinta', data: [30, 40, 35, 50, 60, 55], borderColor: '#34c759', backgroundColor: 'rgba(52,199,89,0.1)', tension: 0.4 },
+            { label: 'Tijolo', data: [200, 220, 210, 250, 270, 260], borderColor: '#ff3b30', backgroundColor: 'rgba(255,59,48,0.1)', tension: 0.4 }
+        ]
+    },
+    cimento: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+            { label: 'Cimento', data: [120, 140, 110, 160, 180, 150], borderColor: '#007aff', backgroundColor: 'rgba(0,122,255,0.1)', tension: 0.4 }
+        ]
+    },
+    areia: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+            { label: 'Areia', data: [80, 90, 70, 100, 120, 110], borderColor: '#ff9500', backgroundColor: 'rgba(255,149,0,0.1)', tension: 0.4 }
+        ]
+    },
+    tinta: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+            { label: 'Tinta', data: [30, 40, 35, 50, 60, 55], borderColor: '#34c759', backgroundColor: 'rgba(52,199,89,0.1)', tension: 0.4 }
+        ]
+    },
+    tijolo: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+            { label: 'Tijolo', data: [200, 220, 210, 250, 270, 260], borderColor: '#ff3b30', backgroundColor: 'rgba(255,59,48,0.1)', tension: 0.4 }
+        ]
+    }
+};
+
+function getChartOptionsDarkMode(baseOptions = {}) {
+    const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (!isDark) return baseOptions;
+    return {
+        ...baseOptions,
+        plugins: {
+            ...baseOptions.plugins,
+            legend: { ...((baseOptions.plugins && baseOptions.plugins.legend) || {}), labels: { color: '#f2f2f7' } },
+            title: { ...((baseOptions.plugins && baseOptions.plugins.title) || {}), color: '#f2f2f7' },
+            tooltip: { ...((baseOptions.plugins && baseOptions.plugins.tooltip) || {}), backgroundColor: '#232326', titleColor: '#f2f2f7', bodyColor: '#f2f2f7', borderColor: '#353539', borderWidth: 1 }
+        },
+        scales: baseOptions.scales ? {
+            ...baseOptions.scales,
+            x: { ...baseOptions.scales.x, ticks: { color: '#f2f2f7' }, grid: { color: '#353539' } },
+            y: { ...baseOptions.scales.y, ticks: { color: '#f2f2f7' }, grid: { color: '#353539' } }
+        } : undefined,
+        backgroundColor: '#232326',
+    };
+}
+
+function initializeDashboardCharts() {
+    // Destroi gráficos antigos se existirem
+    if (osEvolutionChart) { osEvolutionChart.destroy(); osEvolutionChart = null; }
+    if (serviceTypeChart) { serviceTypeChart.destroy(); serviceTypeChart = null; }
+    if (costAnalysisChart) { costAnalysisChart.destroy(); costAnalysisChart = null; }
+    if (resolutionTimeChart) { resolutionTimeChart.destroy(); resolutionTimeChart = null; }
+    if (materialConsumptionChart) { materialConsumptionChart.destroy(); materialConsumptionChart = null; }
+
+    // Garante que Chart.js está disponível
+    if (typeof Chart === 'undefined') return;
+
+    // Evolução de OS por Status (Line)
+    const osEvolutionCtx = document.getElementById('osEvolutionChart');
+    if (osEvolutionCtx) {
+        osEvolutionChart = new Chart(osEvolutionCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [
+                    { label: 'Abertas', data: [40, 45, 50, 47, 49, 47], borderColor: '#007aff', backgroundColor: 'rgba(0,122,255,0.1)', tension: 0.4, fill: true },
+                    { label: 'Vistoria', data: [10, 12, 13, 11, 14, 12], borderColor: '#ff9500', backgroundColor: 'rgba(255,149,0,0.1)', tension: 0.4, fill: true },
+                    { label: 'Execução', data: [20, 22, 25, 23, 24, 23], borderColor: '#34c759', backgroundColor: 'rgba(52,199,89,0.1)', tension: 0.4, fill: true },
+                    { label: 'Concluídas', data: [100, 120, 130, 140, 150, 156], borderColor: '#ff3b30', backgroundColor: 'rgba(255,59,48,0.1)', tension: 0.4, fill: true }
+                ]
+            },
+            options: getChartOptionsDarkMode({
+                responsive: true,
+                plugins: { legend: { display: true }, title: { display: false } },
+                animation: { duration: 1200 }
+            })
+        });
+    }
+    // Distribuição por Tipo de Serviço (Doughnut)
+    const serviceTypeCtx = document.getElementById('serviceTypeChart');
+    if (serviceTypeCtx) {
+        serviceTypeChart = new Chart(serviceTypeCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Hidráulica', 'Elétrica', 'Pintura', 'Carpintaria', 'Serralheria', 'Alvenaria', 'Telhado', 'Limpeza'],
+                datasets: [{
+                    data: [18, 28, 12, 7, 6, 10, 8, 5],
+                    backgroundColor: ['#007aff', '#ff9500', '#34c759', '#ff3b30', '#30d158', '#af52de', '#ffd60a', '#636366'],
+                    borderWidth: 2
+                }]
+            },
+            options: getChartOptionsDarkMode({
+                responsive: true,
+                plugins: { legend: { position: 'bottom' } },
+                animation: { animateScale: true, duration: 1200 }
+            })
+        });
+    }
+    // Análise de Custos por Divisão (Bar)
+    const costAnalysisCtx = document.getElementById('costAnalysisChart');
+    if (costAnalysisCtx) {
+        costAnalysisChart = new Chart(costAnalysisCtx, {
+            type: 'bar',
+            data: {
+                labels: ['SAR03.01 - Construção', 'SAR03.03 - Manutenção'],
+                datasets: [{
+                    label: 'Custo (R$ mil)',
+                    data: [185, 120],
+                    backgroundColor: ['#007aff', '#34c759']
+                }]
+            },
+            options: getChartOptionsDarkMode({
+                responsive: true,
+                plugins: { legend: { display: false } },
+                animation: { duration: 1200 },
+                scales: { y: { beginAtZero: true } }
+            })
+        });
+    }
+    // Tempo Médio de Resolução (Bar)
+    const resolutionTimeCtx = document.getElementById('resolutionTimeChart');
+    if (resolutionTimeCtx) {
+        resolutionTimeChart = new Chart(resolutionTimeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['SAR03.01 - Construção', 'SAR03.03 - Manutenção'],
+                datasets: [{
+                    label: 'Dias',
+                    data: [6.8, 3.2],
+                    backgroundColor: ['#007aff', '#34c759']
+                }]
+            },
+            options: getChartOptionsDarkMode({
+                responsive: true,
+                plugins: { legend: { display: false } },
+                animation: { duration: 1200 },
+                scales: { y: { beginAtZero: true } }
+            })
+        });
+    }
+    // Consumo de Materiais (Line)
+    const materialConsumptionCtx = document.getElementById('materialConsumptionChart');
+    if (materialConsumptionCtx) {
+        materialConsumptionChart = new Chart(materialConsumptionCtx, {
+            type: 'line',
+            data: materialConsumptionData.all,
+            options: getChartOptionsDarkMode({
+                responsive: true,
+                plugins: { legend: { display: true } },
+                animation: { duration: 1200 }
+            })
+        });
+    }
+}
+
+function refreshChart(chartType) {
+    switch(chartType) {
+        case 'osEvolution':
+            if (osEvolutionChart) { osEvolutionChart.update(); }
+            break;
+        case 'serviceType':
+            if (serviceTypeChart) { serviceTypeChart.update(); }
+            break;
+        case 'costAnalysis':
+            if (costAnalysisChart) { costAnalysisChart.update(); }
+            break;
+        case 'resolutionTime':
+            if (resolutionTimeChart) { resolutionTimeChart.update(); }
+            break;
+    }
+}
+
+function updateMaterialChart(material) {
+    if (!materialConsumptionChart) return;
+    materialConsumptionChart.data = materialConsumptionData[material] || materialConsumptionData.all;
+    materialConsumptionChart.update();
+}
+
+// Inicializar gráficos ao mostrar o dashboard
+const dashboardTab = document.getElementById('dashboard');
+if (dashboardTab) {
+    // Inicializa imediatamente se já estiver ativo
+    if (dashboardTab.classList.contains('active')) {
+        setTimeout(() => initializeDashboardCharts(), 200);
+    }
+    // Observer para quando a aba for ativada depois
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach(mutation => {
+            if (mutation.target.classList.contains('active')) {
+                setTimeout(() => initializeDashboardCharts(), 200);
+            }
+        });
+    });
+    observer.observe(dashboardTab, { attributes: true, attributeFilter: ['class'] });
+}
