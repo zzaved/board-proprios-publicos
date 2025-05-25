@@ -2526,6 +2526,39 @@ body {
     .report-generation {
         background: var(--background-primary);
     }
+    .report-option select,
+    .chart-filter {
+        background: var(--background-secondary);
+        color: var(--text-primary);
+        border-color: var(--border-color);
+    }
+    .report-option select:focus,
+    .chart-filter:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.18);
+    }
+    /* Corrige o background da seleção de opções em selects no dark mode */
+    .report-option select option:checked,
+    .report-option select option:focus,
+    .report-option select option:hover,
+    .chart-filter option:checked,
+    .chart-filter option:focus,
+    .chart-filter option:hover {
+        background: #353539 !important;
+        color: #f2f2f7 !important;
+    }
+    /* Para navegadores baseados em Webkit/Blink */
+    .report-option select::-webkit-selection,
+    .chart-filter::-webkit-selection {
+        background: #353539;
+        color: #f2f2f7;
+    }
+    /* Para Firefox */
+    .report-option select::selection,
+    .chart-filter::selection {
+        background: #353539;
+        color: #f2f2f7;
+    }
 }
 
 /* Print Styles */
