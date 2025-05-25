@@ -185,37 +185,21 @@
                             </div>
                             <div class="kanban-count">8</div>
                         </div>
-                        
-                        <div class="os-card" onclick="openModal('os-detail')">
+                        <div class="os-card">
                             <div class="sei-number">SEI: 1129.2025/0000916-7</div>
                             <div class="os-number">Aguardando OS</div>
                             <div class="os-title">Reparo de telhado</div>
-                            <div class="os-location">
-                                <i data-feather="map-pin"></i>
-                                Escola Municipal Vila Galvão
-                            </div>
-                            <div class="os-requester">
-                                <i data-feather="user"></i>
-                                Maria Santos - Diretora
-                            </div>
-                            <div class="os-date">
-                                <i data-feather="calendar"></i>
-                                Recebido: 24/05/2025
-                            </div>
-                            <div class="card-actions">
-                                <button class="btn btn-primary" onclick="event.stopPropagation(); createOSFromSEI('1129.2025/0000916-7')">
-                                    <i data-feather="plus"></i>
-                                    Abrir OS
-                                </button>
-                                <button class="btn btn-secondary" onclick="event.stopPropagation(); downloadOSReportXLS('Aguardando OS', '1129.2025/0000916-7')" title="Baixar XLS - Emissão: <span class='emit-date'></span>">
-                                    <i data-feather="download"></i>
-                                    XLS
-                                </button>
-                                <button class="btn btn-secondary" onclick="event.stopPropagation(); printOSReport('Aguardando OS', '1129.2025/0000916-7')" title="Imprimir - Emissão: <span class='emit-date'></span>">
-                                    <i data-feather="printer"></i>
-                                    Imprimir
-                                </button>
-                            </div>
+                            <div class="os-location"><i data-feather="map-pin"></i> Escola Municipal Vila Galvão</div>
+                            <div class="os-requester"><i data-feather="user"></i> Maria Santos - Diretora</div>
+                            <div class="os-date"><i data-feather="calendar"></i> Recebido: 24/05/2025</div>
+                        </div>
+                        <div class="os-card">
+                            <div class="sei-number">SEI: 1129.2025/0000917-5</div>
+                            <div class="os-number">Aguardando OS</div>
+                            <div class="os-title">Troca de lâmpadas</div>
+                            <div class="os-location"><i data-feather="map-pin"></i> EMEI Jardim Esperança</div>
+                            <div class="os-requester"><i data-feather="user"></i> João Pereira - Diretor</div>
+                            <div class="os-date"><i data-feather="calendar"></i> Recebido: 23/05/2025</div>
                         </div>
                     </div>
 
@@ -227,33 +211,31 @@
                             </div>
                             <div class="kanban-count">5</div>
                         </div>
-                        
                         <div class="os-card" onclick="openModal('vistoria-modal')">
                             <div class="sei-number">SEI: 1129.2025/0000914-2</div>
                             <div class="os-number">OS #2025-0847</div>
                             <div class="os-title">Vazamento hidráulico</div>
-                            <div class="os-location">
-                                <i data-feather="map-pin"></i>
-                                CEU Continental
-                            </div>
-                            <div class="os-requester">
-                                <i data-feather="user"></i>
-                                Ana Costa - Diretora CEU
-                            </div>
-                            <div class="os-date">
-                                <i data-feather="calendar"></i>
-                                Vistoria agendada: 25/05/2025
-                            </div>
-                            <div class="os-division">
-                                <i data-feather="tool"></i>
-                                SAR03.03 - Manutenção
-                            </div>
+                            <div class="os-location"><i data-feather="map-pin"></i> CEU Continental</div>
+                            <div class="os-requester"><i data-feather="user"></i> Ana Costa - Diretora CEU</div>
+                            <div class="os-date"><i data-feather="calendar"></i> Vistoria agendada: 25/05/2025</div>
+                            <div class="os-division"><i data-feather="tool"></i> SAR03.03 - Manutenção</div>
                             <div class="card-actions">
-                                <button class="btn btn-secondary" onclick="event.stopPropagation(); downloadOSReportXLS('2025-0847', '1129.2025/0000914-2')" title="Baixar XLS - Emissão: <span class='emit-date'></span>">
-                                    <i data-feather="download"></i>
-                                    XLS
-                                </button>
                                 <button class="btn btn-secondary" onclick="event.stopPropagation(); printOSReport('2025-0847', '1129.2025/0000914-2')" title="Imprimir - Emissão: <span class='emit-date'></span>">
+                                    <i data-feather="printer"></i>
+                                    Imprimir
+                                </button>
+                            </div>
+                        </div>
+                        <div class="os-card">
+                            <div class="sei-number">SEI: 1129.2025/0000918-3</div>
+                            <div class="os-number">OS #2025-0848</div>
+                            <div class="os-title">Pintura externa</div>
+                            <div class="os-location"><i data-feather="map-pin"></i> UBS Centro</div>
+                            <div class="os-requester"><i data-feather="user"></i> Carla Souza - Coordenadora</div>
+                            <div class="os-date"><i data-feather="calendar"></i> Vistoria agendada: 26/05/2025</div>
+                            <div class="os-division"><i data-feather="tool"></i> SAR03.01 - Construção</div>
+                            <div class="card-actions">
+                                <button class="btn btn-secondary" onclick="event.stopPropagation(); printOSReport('2025-0848', '1129.2025/0000918-3')" title="Imprimir - Emissão: <span class='emit-date'></span>">
                                     <i data-feather="printer"></i>
                                     Imprimir
                                 </button>
@@ -269,33 +251,39 @@
                             </div>
                             <div class="kanban-count">2</div>
                         </div>
-                        
                         <div class="os-card">
                             <div class="sei-number">SEI: 1129.2025/0000910-1</div>
                             <div class="os-number">OS #2025-0845</div>
                             <div class="os-title">Curto-circuito quadro elétrico</div>
-                            <div class="os-location">
-                                <i data-feather="map-pin"></i>
-                                UBS Vila Augusta
-                            </div>
-                            <div class="os-requester">
-                                <i data-feather="user"></i>
-                                Dr. Roberto Silva - Coordenador UBS
-                            </div>
-                            <div class="os-status urgent">
-                                <i data-feather="alert-triangle"></i>
-                                Risco de segurança - Custo: R$ 2.800,00
-                            </div>
-                            <div class="os-division">
-                                <i data-feather="tool"></i>
-                                SAR03.03 - Manutenção
-                            </div>
+                            <div class="os-location"><i data-feather="map-pin"></i> UBS Vila Augusta</div>
+                            <div class="os-requester"><i data-feather="user"></i> Dr. Roberto Silva - Coordenador UBS</div>
+                            <div class="os-status urgent"><i data-feather="alert-triangle"></i> Risco de segurança - Custo: R$ 2.800,00</div>
+                            <div class="os-division"><i data-feather="tool"></i> SAR03.03 - Manutenção</div>
                             <div class="card-actions">
                                 <button class="btn btn-secondary" onclick="event.stopPropagation(); downloadOSReportXLS('2025-0845', '1129.2025/0000910-1')" title="Baixar XLS - Emissão: <span class='emit-date'></span>">
                                     <i data-feather="download"></i>
                                     XLS
                                 </button>
                                 <button class="btn btn-secondary" onclick="event.stopPropagation(); printOSReport('2025-0845', '1129.2025/0000910-1')" title="Imprimir - Emissão: <span class='emit-date'></span>">
+                                    <i data-feather="printer"></i>
+                                    Imprimir
+                                </button>
+                            </div>
+                        </div>
+                        <div class="os-card">
+                            <div class="sei-number">SEI: 1129.2025/0000911-9</div>
+                            <div class="os-number">OS #2025-0846</div>
+                            <div class="os-title">Vazamento de gás</div>
+                            <div class="os-location"><i data-feather="map-pin"></i> EMEF Nova Era</div>
+                            <div class="os-requester"><i data-feather="user"></i> Fernanda Lima - Diretora</div>
+                            <div class="os-status urgent"><i data-feather="alert-triangle"></i> Risco de explosão - Custo: R$ 3.500,00</div>
+                            <div class="os-division"><i data-feather="tool"></i> SAR03.01 - Construção</div>
+                            <div class="card-actions">
+                                <button class="btn btn-secondary" onclick="event.stopPropagation(); downloadOSReportXLS('2025-0846', '1129.2025/0000911-9')" title="Baixar XLS - Emissão: <span class='emit-date'></span>">
+                                    <i data-feather="download"></i>
+                                    XLS
+                                </button>
+                                <button class="btn btn-secondary" onclick="event.stopPropagation(); printOSReport('2025-0846', '1129.2025/0000911-9')" title="Imprimir - Emissão: <span class='emit-date'></span>">
                                     <i data-feather="printer"></i>
                                     Imprimir
                                 </button>
@@ -311,33 +299,39 @@
                             </div>
                             <div class="kanban-count">12</div>
                         </div>
-                        
                         <div class="os-card">
                             <div class="sei-number">SEI: 1129.2025/0000908-5</div>
                             <div class="os-number">OS #2025-0840</div>
                             <div class="os-title">Pintura de salas</div>
-                            <div class="os-location">
-                                <i data-feather="map-pin"></i>
-                                EMEI Jardim São João
-                            </div>
-                            <div class="os-requester">
-                                <i data-feather="user"></i>
-                                Lucia Ferreira - Diretora EMEI
-                            </div>
-                            <div class="os-estimate">
-                                <i data-feather="clock"></i>
-                                Previsão: 15 dias - Custo: R$ 1.250,00
-                            </div>
-                            <div class="os-division">
-                                <i data-feather="tool"></i>
-                                SAR03.01 - Construção
-                            </div>
+                            <div class="os-location"><i data-feather="map-pin"></i> EMEI Jardim São João</div>
+                            <div class="os-requester"><i data-feather="user"></i> Lucia Ferreira - Diretora EMEI</div>
+                            <div class="os-estimate"><i data-feather="clock"></i> Previsão: 15 dias - Custo: R$ 1.250,00</div>
+                            <div class="os-division"><i data-feather="tool"></i> SAR03.01 - Construção</div>
                             <div class="card-actions">
                                 <button class="btn btn-secondary" onclick="event.stopPropagation(); downloadOSReportXLS('2025-0840', '1129.2025/0000908-5')" title="Baixar XLS - Emissão: <span class='emit-date'></span>">
                                     <i data-feather="download"></i>
                                     XLS
                                 </button>
                                 <button class="btn btn-secondary" onclick="event.stopPropagation(); printOSReport('2025-0840', '1129.2025/0000908-5')" title="Imprimir - Emissão: <span class='emit-date'></span>">
+                                    <i data-feather="printer"></i>
+                                    Imprimir
+                                </button>
+                            </div>
+                        </div>
+                        <div class="os-card">
+                            <div class="sei-number">SEI: 1129.2025/0000909-3</div>
+                            <div class="os-number">OS #2025-0841</div>
+                            <div class="os-title">Reparo de calçada</div>
+                            <div class="os-location"><i data-feather="map-pin"></i> UBS Vila Nova</div>
+                            <div class="os-requester"><i data-feather="user"></i> Marcos Paulo - Coordenador</div>
+                            <div class="os-estimate"><i data-feather="clock"></i> Previsão: 10 dias - Custo: R$ 2.000,00</div>
+                            <div class="os-division"><i data-feather="tool"></i> SAR03.03 - Manutenção</div>
+                            <div class="card-actions">
+                                <button class="btn btn-secondary" onclick="event.stopPropagation(); downloadOSReportXLS('2025-0841', '1129.2025/0000909-3')" title="Baixar XLS - Emissão: <span class='emit-date'></span>">
+                                    <i data-feather="download"></i>
+                                    XLS
+                                </button>
+                                <button class="btn btn-secondary" onclick="event.stopPropagation(); printOSReport('2025-0841', '1129.2025/0000909-3')" title="Imprimir - Emissão: <span class='emit-date'></span>">
                                     <i data-feather="printer"></i>
                                     Imprimir
                                 </button>
@@ -351,41 +345,37 @@
                                 <div class="status-indicator execucao"></div>
                                 <h3>Em Execução</h3>
                             </div>
-                            <div class="kanban-count">7</div>
+                            <div class="kanban-count">2</div>
                         </div>
-                        
-                        <div class="os-card" onclick="openModal('daily-report-modal')">
+                        <div class="os-card">
                             <div class="sei-number">SEI: 1129.2025/0000905-8</div>
                             <div class="os-number">OS #2025-0835</div>
                             <div class="os-title">Reforma do pátio</div>
-                            <div class="os-location">
-                                <i data-feather="map-pin"></i>
-                                Escola Municipal Centro
-                            </div>
-                            <div class="os-requester">
-                                <i data-feather="user"></i>
-                                Paulo Santos - Diretor
-                            </div>
-                            <div class="os-progress">
-                                <i data-feather="trending-up"></i>
-                                Progresso: 60% - Custo: R$ 8.500,00
-                            </div>
-                            <div class="daily-report-status">
-                                <i data-feather="check-circle"></i>
-                                Relatório diário atualizado
-                            </div>
-                            <div class="os-division">
-                                <i data-feather="tool"></i>
-                                SAR03.01 - Construção
-                            </div>
+                            <div class="os-location"><i data-feather="map-pin"></i> Escola Municipal Centro</div>
+                            <div class="os-requester"><i data-feather="user"></i> Paulo Santos - Diretor</div>
+                            <div class="os-progress"><i data-feather="trending-up"></i> Progresso: 60% - Custo: R$ 8.500,00</div>
+                            <div class="daily-report-status"><i data-feather="check-circle"></i> Relatório diário atualizado</div>
+                            <div class="os-division"><i data-feather="tool"></i> SAR03.01 - Construção</div>
                             <div class="card-actions">
-                                <button class="btn btn-secondary" onclick="event.stopPropagation(); downloadOSReportXLS('2025-0835', '1129.2025/0000905-8')" title="Baixar XLS - Emissão: <span class='emit-date'></span>">
+                                <button class="btn btn-secondary" onclick="event.stopPropagation(); downloadOSReportXLS('construcao', 'all')" title="Baixar XLS de Construção">
                                     <i data-feather="download"></i>
-                                    XLS
+                                    XLS Construção
                                 </button>
-                                <button class="btn btn-secondary" onclick="event.stopPropagation(); printOSReport('2025-0835', '1129.2025/0000905-8')" title="Imprimir - Emissão: <span class='emit-date'></span>">
-                                    <i data-feather="printer"></i>
-                                    Imprimir
+                            </div>
+                        </div>
+                        <div class="os-card">
+                            <div class="sei-number">SEI: 1129.2025/0000906-6</div>
+                            <div class="os-number">OS #2025-0836</div>
+                            <div class="os-title">Manutenção elétrica</div>
+                            <div class="os-location"><i data-feather="map-pin"></i> UBS Central</div>
+                            <div class="os-requester"><i data-feather="user"></i> Lucas Martins - Coordenador</div>
+                            <div class="os-progress"><i data-feather="trending-up"></i> Progresso: 40% - Custo: R$ 2.200,00</div>
+                            <div class="daily-report-status"><i data-feather="check-circle"></i> Relatório diário atualizado</div>
+                            <div class="os-division"><i data-feather="tool"></i> SAR03.03 - Manutenção</div>
+                            <div class="card-actions">
+                                <button class="btn btn-secondary" onclick="event.stopPropagation(); downloadOSReportXLS('manutencao', 'all')" title="Baixar XLS de Manutenção">
+                                    <i data-feather="download"></i>
+                                    XLS Manutenção
                                 </button>
                             </div>
                         </div>
@@ -399,39 +389,35 @@
                             </div>
                             <div class="kanban-count">4</div>
                         </div>
-                        
-                        <div class="os-card" onclick="openModal('closing-modal')">
+                        <div class="os-card">
                             <div class="sei-number">SEI: 1129.2025/0000901-3</div>
                             <div class="os-number">OS #2025-0830</div>
                             <div class="os-title">Troca de portas</div>
-                            <div class="os-location">
-                                <i data-feather="map-pin"></i>
-                                UBS Macedo
-                            </div>
-                            <div class="os-requester">
-                                <i data-feather="user"></i>
-                                Dra. Marina Costa - Coordenadora
-                            </div>
-                            <div class="os-completion">
-                                <i data-feather="check-circle"></i>
-                                Concluído em: 23/05/2025 - Custo Final: R$ 3.200,00
-                            </div>
-                            <div class="sei-status">
-                                <i data-feather="file-text"></i>
-                                Aguardando envio para SEI
-                            </div>
-                            <div class="os-division">
-                                <i data-feather="tool"></i>
-                                SAR03.03 - Manutenção
-                            </div>
+                            <div class="os-location"><i data-feather="map-pin"></i> UBS Macedo</div>
+                            <div class="os-requester"><i data-feather="user"></i> Dra. Marina Costa - Coordenadora</div>
+                            <div class="os-completion"><i data-feather="check-circle"></i> Concluído em: 23/05/2025 - Custo Final: R$ 3.200,00</div>
+                            <div class="sei-status"><i data-feather="file-text"></i> Aguardando envio para SEI</div>
+                            <div class="os-division"><i data-feather="tool"></i> SAR03.03 - Manutenção</div>
                             <div class="card-actions">
-                                <button class="btn btn-secondary" onclick="event.stopPropagation(); downloadOSReportXLS('2025-0830', '1129.2025/0000901-3')" title="Baixar XLS - Emissão: <span class='emit-date'></span>">
+                                <button class="btn btn-secondary" onclick="event.stopPropagation(); downloadOSReportXLS('custo-final', '2025-0830')" title="Baixar XLS de Custo Final">
                                     <i data-feather="download"></i>
-                                    XLS
+                                    XLS Custo Final
                                 </button>
-                                <button class="btn btn-secondary" onclick="event.stopPropagation(); printOSReport('2025-0830', '1129.2025/0000901-3')" title="Imprimir - Emissão: <span class='emit-date'></span>">
-                                    <i data-feather="printer"></i>
-                                    Imprimir
+                            </div>
+                        </div>
+                        <div class="os-card">
+                            <div class="sei-number">SEI: 1129.2025/0000902-1</div>
+                            <div class="os-number">OS #2025-0831</div>
+                            <div class="os-title">Pintura geral</div>
+                            <div class="os-location"><i data-feather="map-pin"></i> EMEF São Lucas</div>
+                            <div class="os-requester"><i data-feather="user"></i> Pedro Lima - Diretor</div>
+                            <div class="os-completion"><i data-feather="check-circle"></i> Concluído em: 22/05/2025 - Custo Final: R$ 2.100,00</div>
+                            <div class="sei-status"><i data-feather="file-text"></i> Aguardando envio para SEI</div>
+                            <div class="os-division"><i data-feather="tool"></i> SAR03.01 - Construção</div>
+                            <div class="card-actions">
+                                <button class="btn btn-secondary" onclick="event.stopPropagation(); downloadOSReportXLS('custo-final', '2025-0831')" title="Baixar XLS de Custo Final">
+                                    <i data-feather="download"></i>
+                                    XLS Custo Final
                                 </button>
                             </div>
                         </div>
@@ -485,6 +471,11 @@
                                 <i data-feather="settings"></i>
                                 <span>Produção da Fábrica</span>
                                 <small>Pré-moldados</small>
+                            </div>
+                            <div class="report-item" onclick="openSpreadsheet('material-gasto-obra')">
+                                <i data-feather="file-text"></i>
+                                <span>Material Gasto na Obra</span>
+                                <small>Relatório de material gasto ao fim de cada ordem</small>
                             </div>
                         </div>
                     </div>
@@ -1338,5 +1329,135 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+    // Mock para planilha de Material Gasto na Obra
+    function openSpreadsheet(type) {
+        let title = 'Planilha';
+        let content = '';
+        if (type === 'material-gasto-obra') {
+            title = 'Relatório de Materiais Gastos na Obra';
+            content = `
+                <table class="spreadsheet-table">
+                    <thead>
+                        <tr>
+                            <th>DIA</th>
+                            <th>ENDEREÇO</th>
+                            <th>SERVIÇO/OBRA</th>
+                            <th>EQUIPE</th>
+                            <th>LAJOTA 7</th>
+                            <th>LAJOTA 12</th>
+                            <th>LAJOTÃO 20X60</th>
+                            <th>TAMPÃO PV</th>
+                            <th>GUIA RETA</th>
+                            <th>GUIA CHAPEU</th>
+                            <th>GABIÃO</th>
+                            <th>BLOCO 10</th>
+                            <th>BLOCO 15</th>
+                            <th>BLOCO 20</th>
+                            <th>FERRAGEM</th>
+                            <th>CIMENTO</th>
+                            <th>AREIA</th>
+                            <th>PÓ DE PEDRA</th>
+                            <th>PEDRA Nº 01</th>
+                            <th>PEDRISCO</th>
+                            <th>PISO INTERTRAVADO</th>
+                            <th>CONCRETO USINADO</th>
+                            <th>RACHÃO</th>
+                            <th>BICA CORRIDA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>24/05/2025</td>
+                            <td>Rua das Flores, 123</td>
+                            <td>Calçada acessível</td>
+                            <td>Equipe A</td>
+                            <td>50</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>10</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>100</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>20kg</td>
+                            <td>10</td>
+                            <td>2m³</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>23/05/2025</td>
+                            <td>Av. Central, 456</td>
+                            <td>Guia e sarjeta</td>
+                            <td>Equipe B</td>
+                            <td>0</td>
+                            <td>30</td>
+                            <td>10</td>
+                            <td>0</td>
+                            <td>15</td>
+                            <td>5</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>50</td>
+                            <td>0</td>
+                            <td>10kg</td>
+                            <td>8</td>
+                            <td>1.5m³</td>
+                            <td>0.5m³</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>22/05/2025</td>
+                            <td>Praça Nova, 789</td>
+                            <td>Reparo de PV</td>
+                            <td>Equipe C</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>30</td>
+                            <td>5kg</td>
+                            <td>3</td>
+                            <td>1m³</td>
+                            <td>0</td>
+                            <td>2m³</td>
+                            <td>0.5m³</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+        } else {
+            // Chama função original se não for material-gasto-obra
+            const spreadsheet = generateSpreadsheetData(type);
+            title = spreadsheet.title;
+            content = spreadsheet.content;
+        }
+        document.getElementById('spreadsheet-title').innerText = title;
+        document.getElementById('spreadsheet-content').innerHTML = content;
+        document.getElementById('spreadsheet-modal').style.display = 'block';
+    }
+    </script>
 </body>
 </html>
