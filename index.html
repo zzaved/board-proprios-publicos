@@ -415,63 +415,17 @@
                         </div>
 
                         <div class="filter-group">
-                            <div class="filter-label">Local</div>
-                            <div class="filter-options">
-                                <div class="filter-item" onclick="filterByLocation('north')">
-                                    <i data-feather="map-pin"></i>
-                                    <span>Zona Norte</span>
-                                    <span class="filter-count">28</span>
-                                </div>
-                                <div class="filter-item" onclick="filterByLocation('south')">
-                                    <i data-feather="map-pin"></i>
-                                    <span>Zona Sul</span>
-                                    <span class="filter-count">35</span>
-                                </div>
-                                <div class="filter-item" onclick="filterByLocation('east')">
-                                    <i data-feather="map-pin"></i>
-                                    <span>Zona Leste</span>
-                                    <span class="filter-count">42</span>
-                                </div>
-                                <div class="filter-item" onclick="filterByLocation('west')">
-                                    <i data-feather="map-pin"></i>
-                                    <span>Zona Oeste</span>
-                                    <span class="filter-count">31</span>
-                                </div>
-                                <div class="filter-item" onclick="filterByLocation('center')">
-                                    <i data-feather="map-pin"></i>
-                                    <span>Centro</span>
-                                    <span class="filter-count">25</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="filter-group">
                             <div class="filter-label">Tipo de Serviço</div>
                             <div class="filter-options">
-                                <div class="filter-item" onclick="filterByService('hydraulic')">
-                                    <i data-feather="droplet"></i>
-                                    <span>Hidráulica</span>
-                                    <span class="filter-count">56</span>
-                                </div>
-                                <div class="filter-item" onclick="filterByService('electrical')">
-                                    <i data-feather="zap"></i>
-                                    <span>Elétrica</span>
-                                    <span class="filter-count">48</span>
-                                </div>
                                 <div class="filter-item" onclick="filterByService('construction')">
                                     <i data-feather="tool"></i>
                                     <span>Construção</span>
-                                    <span class="filter-count">37</span>
+                                    <span class="filter-count">85</span>
                                 </div>
-                                <div class="filter-item" onclick="filterByService('painting')">
-                                    <i data-feather="edit-2"></i>
-                                    <span>Pintura</span>
-                                    <span class="filter-count">29</span>
-                                </div>
-                                <div class="filter-item" onclick="filterByService('cleaning')">
-                                    <i data-feather="wind"></i>
-                                    <span>Limpeza</span>
-                                    <span class="filter-count">33</span>
+                                <div class="filter-item" onclick="filterByService('maintenance')">
+                                    <i data-feather="settings"></i>
+                                    <span>Manutenção</span>
+                                    <span class="filter-count">156</span>
                                 </div>
                             </div>
                         </div>
@@ -486,8 +440,8 @@
                                 <i data-feather="x" onclick="removeFilter('requester')"></i>
                             </div>
                             <div class="active-filter">
-                                <span>Zona Norte</span>
-                                <i data-feather="x" onclick="removeFilter('location')"></i>
+                                <span>Construção</span>
+                                <i data-feather="x" onclick="removeFilter('service')"></i>
                             </div>
                             <button class="clear-filters" onclick="clearAllFilters()">
                                 <i data-feather="trash-2"></i>

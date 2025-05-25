@@ -623,8 +623,9 @@ body {
 }
 
 .btn-primary {
-    background: var(--primary-color);
+    background: #007aff;
     color: white;
+    border: none;
 }
 
 .btn-primary:hover {
@@ -634,15 +635,15 @@ body {
 }
 
 .btn-secondary {
-    background: var(--background-secondary);
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
+    background: #f5f5f7;
+    color: #1d1d1f;
+    border: 1px solid #e5e5e7;
 }
 
 .btn-secondary:hover {
-    background: var(--background-primary);
-    border-color: var(--primary-color);
-    color: var(--primary-color);
+    background: #ffffff;
+    border-color: #007aff;
+    color: #007aff;
     transform: translateY(-2px);
 }
 
