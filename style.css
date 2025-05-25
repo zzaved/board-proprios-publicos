@@ -1771,23 +1771,41 @@ body {
 @media (prefers-color-scheme: dark) {
     :root {
         --text-primary: #f2f2f7;
-        --text-secondary: #98989d;
+        --text-secondary: #b0b0b8;
         --text-tertiary: #636366;
-        --background-primary: #1c1c1e;
-        --background-secondary: #2c2c2e;
-        --border-color: #38383a;
+        --background-primary: #18181a;
+        --background-secondary: #232326;
+        --border-color: #353539;
+        --shadow-color: rgba(0,0,0,0.7);
     }
-    
     body {
-        background: #000;
+        background: #101014;
         color: var(--text-primary);
     }
-    
     .header {
-        background: rgba(28, 28, 30, 0.8);
+        background: rgba(24, 24, 26, 0.95);
         border-bottom-color: var(--border-color);
     }
-    
+    .logo h1, .logo i, .subtitle {
+        color: var(--text-primary);
+    }
+    .tabs {
+        background: var(--background-secondary);
+        box-shadow: 0 1px 3px var(--shadow-color);
+    }
+    .tab {
+        color: var(--text-secondary);
+        background: transparent;
+    }
+    .tab.active {
+        background: var(--primary-color);
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+    }
+    .tab:hover:not(.active) {
+        color: var(--text-primary);
+        background: rgba(0, 122, 255, 0.08);
+    }
     .content,
     .dashboard-card,
     .form-section,
@@ -1797,38 +1815,222 @@ body {
     .production-content {
         background: var(--background-primary);
         border-color: var(--border-color);
+        color: var(--text-primary);
     }
-    
     .stat-card,
     .os-card,
     .report-item,
     .production-item {
         background: var(--background-secondary);
         border-color: var(--border-color);
+        color: var(--text-primary);
     }
-    
+    .stat-icon {
+        background: rgba(0, 122, 255, 0.18);
+    }
+    .btn-primary {
+        background: var(--primary-color);
+        color: #fff;
+        border: none;
+    }
+    .btn-primary:hover {
+        background: #0056b3;
+        color: #fff;
+    }
     .btn-secondary {
         background: var(--background-secondary);
         color: var(--text-primary);
-        border-color: var(--border-color);
+        border: 1px solid var(--border-color);
     }
-    
+    .btn-secondary:hover {
+        background: #232326;
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+    .btn-icon {
+        color: var(--text-secondary);
+    }
+    .btn-icon:hover {
+        background: #232326;
+        color: var(--primary-color);
+    }
     .form-group input,
     .form-group select,
     .form-group textarea,
     .search-bar input {
-        background: var(--background-secondary);
+        background: #18181a;
         border-color: var(--border-color);
         color: var(--text-primary);
     }
-    
-    .warehouse-table,
-    .spreadsheet-table {
-        background: var(--background-primary);
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.18);
     }
-    
+    .team-member {
+        background: #232326;
+        border-color: var(--border-color);
+    }
+    .team-member label {
+        color: var(--text-primary);
+    }
+    .materials-section,
+    .materials-summary {
+        background: #232326;
+        border-color: var(--border-color);
+    }
+    .material-item {
+        background: #232326;
+        color: var(--text-primary);
+    }
+    .material-item button:hover {
+        background: rgba(255, 59, 48, 0.18);
+    }
+    .detail-item {
+        background: #232326;
+        color: var(--text-primary);
+    }
+    .detail-item div strong {
+        color: var(--text-secondary);
+    }
+    .detail-item div span {
+        color: var(--text-primary);
+    }
+    .modal-content {
+        background: #18181a;
+        color: var(--text-primary);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+    }
+    .modal-header,
+    .modal-footer {
+        background: #232326;
+        color: var(--text-primary);
+        border-color: var(--border-color);
+    }
+    .modal-close:hover {
+        background: #232326;
+    }
+    .spreadsheet-viewer {
+        background: #18181a;
+        border-color: var(--border-color);
+    }
+    .spreadsheet-table {
+        background: #18181a;
+        color: var(--text-primary);
+    }
+    .spreadsheet-table th {
+        background: #232326;
+        color: var(--primary-color);
+    }
+    .spreadsheet-table .header-main {
+        background: #232326;
+        color: #fff;
+    }
+    .spreadsheet-table .header-section {
+        background: #232326;
+        color: #fff;
+    }
+    .spreadsheet-table .header-year {
+        background: #18181a;
+        color: #fff;
+    }
+    .warehouse-table {
+        background: #18181a;
+        color: var(--text-primary);
+    }
     .warehouse-table th {
-        background: var(--background-secondary);
+        background: #232326;
+        color: var(--primary-color);
+    }
+    .warehouse-table td {
+        color: var(--text-primary);
+    }
+    .warehouse-table tr.low-stock {
+        background: rgba(255, 149, 0, 0.08);
+    }
+    .status-badge.critical {
+        background: rgba(255, 59, 48, 0.18);
+        color: #ff3b30;
+    }
+    .status-badge.warning {
+        background: rgba(255, 149, 0, 0.18);
+        color: #ff9500;
+    }
+    .status-badge.normal {
+        background: rgba(52, 199, 89, 0.18);
+        color: #34c759;
+    }
+    .ai-suggestions {
+        background: #1a2330;
+        border: 1px solid #2a3a4d;
+        color: var(--text-primary);
+    }
+    .suggestion-item {
+        background: #232326;
+        color: var(--text-primary);
+        border-left: 3px solid var(--primary-color);
+    }
+    .suggestion-header {
+        color: var(--primary-color);
+    }
+    .suggestion-content {
+        color: var(--text-primary);
+    }
+    .notification {
+        background: #232326;
+        color: var(--text-primary);
+        border-left: 4px solid var(--primary-color);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+    }
+    .notification-content span {
+        color: var(--text-primary);
+    }
+    .notification-close {
+        color: var(--text-secondary);
+    }
+    .notification-close:hover {
+        background: #18181a;
+        color: var(--primary-color);
+    }
+    .fab {
+        background-color: var(--primary-color);
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+    }
+    .fab:hover {
+        background-color: #0056b3;
+    }
+    .photo-placeholder {
+        background: #232326;
+        border-color: var(--border-color);
+        color: var(--text-primary);
+    }
+    .photo-placeholder i {
+        color: var(--text-secondary);
+    }
+    .photo-placeholder span {
+        color: var(--text-primary);
+    }
+    .photo-placeholder small {
+        color: var(--text-secondary);
+    }
+    .report-header,
+    .card-header,
+    .modal-header {
+        background: #232326 !important;
+        color: var(--text-primary) !important;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .report-header h3,
+    .card-header h3,
+    .modal-header h2 {
+        color: var(--text-primary) !important;
+    }
+    .report-header i,
+    .card-header i,
+    .modal-header i {
+        color: var(--primary-color) !important;
     }
 }
 
