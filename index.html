@@ -185,7 +185,7 @@
                             </div>
                             <div class="kanban-count">8</div>
                         </div>
-                        <div class="os-card">
+                        <div class="os-card" onclick="openModal('os-detail')">
                             <div class="sei-number">SEI: 1129.2025/0000916-7</div>
                             <div class="os-number">Aguardando OS</div>
                             <div class="os-title">Reparo de telhado</div>
@@ -193,7 +193,7 @@
                             <div class="os-requester"><i data-feather="user"></i> Maria Santos - Diretora</div>
                             <div class="os-date"><i data-feather="calendar"></i> Recebido: 24/05/2025</div>
                         </div>
-                        <div class="os-card">
+                        <div class="os-card" onclick="openModal('os-detail')">
                             <div class="sei-number">SEI: 1129.2025/0000917-5</div>
                             <div class="os-number">Aguardando OS</div>
                             <div class="os-title">Troca de lâmpadas</div>
@@ -226,7 +226,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="os-card">
+                        <div class="os-card" onclick="openModal('vistoria-modal')">
                             <div class="sei-number">SEI: 1129.2025/0000918-3</div>
                             <div class="os-number">OS #2025-0848</div>
                             <div class="os-title">Pintura externa</div>
@@ -251,7 +251,7 @@
                             </div>
                             <div class="kanban-count">2</div>
                         </div>
-                        <div class="os-card">
+                        <div class="os-card" onclick="openModal('os-detail')">
                             <div class="sei-number">SEI: 1129.2025/0000910-1</div>
                             <div class="os-number">OS #2025-0845</div>
                             <div class="os-title">Curto-circuito quadro elétrico</div>
@@ -270,7 +270,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="os-card">
+                        <div class="os-card" onclick="openModal('os-detail')">
                             <div class="sei-number">SEI: 1129.2025/0000911-9</div>
                             <div class="os-number">OS #2025-0846</div>
                             <div class="os-title">Vazamento de gás</div>
@@ -299,7 +299,7 @@
                             </div>
                             <div class="kanban-count">12</div>
                         </div>
-                        <div class="os-card">
+                        <div class="os-card" onclick="openModal('os-detail')">
                             <div class="sei-number">SEI: 1129.2025/0000908-5</div>
                             <div class="os-number">OS #2025-0840</div>
                             <div class="os-title">Pintura de salas</div>
@@ -318,7 +318,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="os-card">
+                        <div class="os-card" onclick="openModal('os-detail')">
                             <div class="sei-number">SEI: 1129.2025/0000909-3</div>
                             <div class="os-number">OS #2025-0841</div>
                             <div class="os-title">Reparo de calçada</div>
@@ -347,7 +347,7 @@
                             </div>
                             <div class="kanban-count">2</div>
                         </div>
-                        <div class="os-card">
+                        <div class="os-card" onclick="openModal('daily-report-modal')">
                             <div class="sei-number">SEI: 1129.2025/0000905-8</div>
                             <div class="os-number">OS #2025-0835</div>
                             <div class="os-title">Reforma do pátio</div>
@@ -363,7 +363,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="os-card">
+                        <div class="os-card" onclick="openModal('daily-report-modal')">
                             <div class="sei-number">SEI: 1129.2025/0000906-6</div>
                             <div class="os-number">OS #2025-0836</div>
                             <div class="os-title">Manutenção elétrica</div>
@@ -389,7 +389,7 @@
                             </div>
                             <div class="kanban-count">4</div>
                         </div>
-                        <div class="os-card">
+                        <div class="os-card" onclick="openModal('closing-modal')">
                             <div class="sei-number">SEI: 1129.2025/0000901-3</div>
                             <div class="os-number">OS #2025-0830</div>
                             <div class="os-title">Troca de portas</div>
@@ -405,7 +405,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="os-card">
+                        <div class="os-card" onclick="openModal('closing-modal')">
                             <div class="sei-number">SEI: 1129.2025/0000902-1</div>
                             <div class="os-number">OS #2025-0831</div>
                             <div class="os-title">Pintura geral</div>
@@ -1323,6 +1323,63 @@
             <div class="modal-body" style="padding: 0;">
                 <div id="spreadsheet-content" class="spreadsheet-viewer">
                     <!-- Spreadsheet content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal genérico para detalhes de OS (mock) -->
+    <div id="os-detail" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>
+                    <i data-feather="file-text"></i>
+                    Detalhes da Ordem de Serviço
+                </h2>
+                <button class="modal-close" onclick="closeModal('os-detail')">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <i data-feather="file"></i>
+                        <div>
+                            <strong>SEI</strong>
+                            <span>1129.2025/0000916-7</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i data-feather="map-pin"></i>
+                        <div>
+                            <strong>Local</strong>
+                            <span>Endereço do serviço</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i data-feather="user"></i>
+                        <div>
+                            <strong>Solicitante</strong>
+                            <span>Nome do solicitante</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i data-feather="tool"></i>
+                        <div>
+                            <strong>Serviço</strong>
+                            <span>Tipo de serviço/obra</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label><i data-feather="edit-3"></i> Descrição do Problema</label>
+                    <div style="background:#f7f7f7; border-radius:8px; padding:12px; color:#333;">Descrição detalhada do problema ou serviço solicitado.</div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('os-detail')">
+                        <i data-feather="x"></i>
+                        Fechar
+                    </button>
                 </div>
             </div>
         </div>
