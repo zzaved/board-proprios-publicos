@@ -2,8 +2,8 @@
 let featherReady = false;
 let featherQueue = [];
 let currentUser = {
-    name: 'João Silva',
-    role: 'Chefe de Seção SAR03',
+    name: 'Emerson',
+    role: 'Chefe de Seção',
     permissions: ['create_os', 'manage_reports', 'view_all']
 };
 
